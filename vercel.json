@@ -1,0 +1,7 @@
+{
+  "routes": [
+    { "src": "/stickers/(.*)", "dest": "/public/stickers/$1" },
+    { "handle": "filesystem" },
+    { "src": "/(.*)", "dest": "/index.html" }
+  ]
+}
