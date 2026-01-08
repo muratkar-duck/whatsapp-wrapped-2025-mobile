@@ -1,0 +1,3353 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>WhatsApp 2025 Wrapped</title>
+  <style>
+    :root {
+      --bg: #07070c;
+      --page: #ffffff;
+      --text: #0b0b10;
+      --muted: #4b5563;
+      --accent: #7c3aed;       /* wrapped purple */
+      --accent-soft: #eef2ff;
+      --gold: #ff2bd6;         /* wrapped magenta */
+      --card: rgba(255,255,255,0.86);
+      --line: rgba(0,0,0,0.08);
+
+      /* extra wrapped tokens */
+      --wrap-cyan: #00e5ff;
+      --wrap-lime: #b6ff00;
+      --wrap-orange: #ff7a00;
+      --wrap-pink: #ff2bd6;
+      --wrap-purple: #7c3aed;
+      --wrap-ink: #0b0b10;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: 'Inter','Segoe UI',system-ui,-apple-system,sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.5;
+    }
+    h1,h2,h3,h4 { margin: 0 0 8px; font-weight: 800; letter-spacing: -0.3px; }
+    p { margin: 0 0 8px; }
+
+    .controls {
+      position: sticky;
+      top: 0;
+      z-index: 20;
+      background: rgba(246,243,249,0.96);
+      backdrop-filter: blur(10px);
+      padding: 14px 18px;
+      border-bottom: 1px solid var(--line);
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px 18px;
+      align-items: flex-end;
+    }
+    .controls label { font-weight: 700; font-size: 13px; color: var(--muted); display:block; margin-bottom: 6px; }
+    .controls input[type=file] { padding: 8px 10px; border: 1px solid var(--line); border-radius: 10px; background: #fff; min-width: 220px; }
+    .controls button {
+      border: none;
+      border-radius: 10px;
+      padding: 10px 14px;
+      font-weight: 800;
+      cursor: pointer;
+      color: #fff;
+      background: var(--accent);
+      box-shadow: 0 10px 26px rgba(177,74,237,0.25);
+    }
+    .controls .ghost { background: #2f2646; box-shadow: none; color: #fff; }
+    .pill { display:inline-flex; align-items:center; gap:8px; padding:8px 14px; border-radius:999px;
+      background: #fff; border: 1px solid rgba(107,30,45,0.45);
+      color: var(--accent); font-weight:900; font-size:13px; letter-spacing:0.2px; }
+
+    .screen-nav {
+      position: sticky;
+      top: 78px;
+      z-index: 15;
+      display: flex;
+      gap: 6px;
+      padding: 10px 16px;
+      overflow-x: auto;
+      background: rgba(246,243,249,0.96);
+      border-bottom: 1px solid var(--line);
+    }
+    .screen-nav a { text-decoration: none; color: var(--muted); padding: 8px 10px; border-radius: 10px; background: #fff; border: 1px solid var(--line); font-weight: 700; font-size: 13px; white-space: nowrap; }
+    .screen-nav a:hover { background: var(--accent-soft); color: var(--accent); }
+
+    .pages { max-width: 940px; margin: 0 auto 48px; padding: 12px; }
+    .page {
+      width: 210mm;
+      min-height: 297mm;
+      margin: 18px auto;
+      padding: 0;
+      position: relative;
+      overflow: hidden;
+      background: transparent;
+      box-shadow: 0 18px 38px rgba(20,12,40,0.08);
+      border-radius: 18px;
+      page-break-after: always;
+      break-after: page;
+    }
+    .page:last-child { page-break-after: auto; }
+    .page-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 14px; }
+    .page-title { font-size: 28px; color: var(--accent); letter-spacing: -0.2px; }
+    .page-sub { color: var(--muted); font-weight: 600; margin-top: 2px; }
+
+    .grid { display: grid; grid-template-columns: repeat(12, 1fr); gap: 14px; }
+    .card { background: var(--card); border: 1px solid var(--line); border-radius: 14px; padding: 14px; box-shadow: inset 0 1px 0 rgba(255,255,255,0.9); }
+    .card h3 { font-size: 16px; margin-bottom: 6px; color: var(--accent); }
+    .card h4 { font-size: 14px; margin-top: 8px; }
+    .kpi { font-size: 28px; font-weight: 800; margin: 4px 0; }
+    .muted { color: var(--muted); font-size: 12px; }
+    .tag { background: var(--accent-soft); color: var(--accent); padding: 3px 8px; border-radius: 10px; font-weight: 700; font-size: 12px; }
+    .list { list-style: none; padding: 0; margin: 0; display: grid; gap: 8px; }
+    .list li { padding: 10px 12px; border-radius: 12px; background: #f8f6fb; border: 1px solid var(--line); font-size: 13px; }
+
+    .two-col { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; }
+    .badge { display: inline-flex; align-items: center; gap: 6px; background: #111; color: #fff; padding: 6px 10px; border-radius: 999px; font-size: 12px; }
+    .note { font-size: 11px; color: var(--muted); }
+    .chart-box { background: #fff; border-radius: 14px; border: 1px solid var(--line); padding: 10px; }
+    canvas { width: 100%; height: 240px; display: block; }
+
+    svg.chart { width: 100%; height: 260px; display: block; font-family: 'Inter','Segoe UI',system-ui,-apple-system,sans-serif; }
+    .chart text { fill: #2b213f; font-size: 12px; }
+    .chart .axis { stroke: #2b213f; stroke-width: 1; }
+    .chart .grid { stroke: #e4deef; stroke-width: 1; }
+    .chart .label { font-weight: 700; }
+    .chart .title { font-size: 14px; font-weight: 800; }
+    .chart .subtitle { font-size: 12px; fill: var(--muted); }
+
+    .word-cloud-frame { background: #f8f5fd; border-radius: 16px; padding: 14px; aspect-ratio: 3 / 2; width: 100%; max-width: 900px; margin: 0 auto; box-shadow: inset 0 0 0 1px var(--line), 0 10px 26px rgba(51,27,92,0.08); border: 1px solid var(--line); }
+    .word-cloud-frame canvas { width: 100%; height: 100% !important; display: block; background: transparent; }
+    .word-cloud-hint { color: #6b5d8a; font-size: 12px; text-align: center; margin-top: 8px; }
+    .word-cloud-settings { margin-top: 8px; border-top: 1px solid var(--line); padding-top: 8px; }
+    .word-cloud-settings label { display: block; margin-bottom: 6px; color: #2b213f; font-weight: 700; }
+    .word-cloud-settings input, .word-cloud-settings select { width: 100%; margin-bottom: 6px; }
+    .emoji-list { display: grid; grid-template-columns: repeat(auto-fit, minmax(120px, 1fr)); gap: 10px; text-align: center; }
+    .emoji-item { font-size: 36px; line-height: 1.2; }
+    .two-col-list { columns: 2; column-gap: 12px; }
+    .two-col-list li { break-inside: avoid; }
+
+    .closing-input { width: 100%; min-height: 160px; padding: 12px; border-radius: 12px; border: 1px solid var(--line); font-size: 14px; }
+
+    .print-canvas-image { display: block; width: 100%; height: auto; }
+    .hidden { display: none !important; }
+    .no-print { }
+    .extra { display: none; }
+    body.show-full .extra { display: block; }
+    .print-mode * { animation: none !important; transition: none !important; }
+    .debug {
+      position: fixed; right: 12px; bottom: 12px;
+      width: 320px; max-height: 70vh; overflow: auto;
+      background: rgba(18,16,34,0.9); color: #e5defc;
+      padding: 12px; border-radius: 12px; font-size: 12px;
+      box-shadow: 0 8px 32px rgba(0,0,0,0.35);
+    }
+
+    @page { size: A4; margin: 0; }
+
+    @media print {
+      /* Print with minimal browser interference */
+      @page { size: A4; margin: 0; }
+      html, body { margin: 0; padding: 0; }
+      body { background: #fff; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+      .controls, .toast, #dropZone { display:none !important; }
+
+      /* Each .page is one printed page */
+      .page {
+        width: 210mm; height: 297mm;
+        margin: 0 !important;
+        border-radius: 0 !important;
+        box-shadow: none !important;
+        page-break-after: always;
+        break-after: page;
+        overflow: hidden;
+      }
+
+      /* Full-bleed cover, padded inner */
+      .page.cover { padding: 0 !important; }
+      .page.cover .cover-inner{ padding: 40mm 30mm !important; }
+      .page.cover::after{ inset:-30% !important; }
+      .page.cover .cover-footer{ bottom: 18mm !important; }
+
+      /* Standard inner padding for other pages */
+      .page:not(.cover){ padding: 0 !important; }
+      .page:not(.cover) .page-content{ padding: 14mm 12mm !important; }
+
+      /* prevent awkward splits */
+      .card, .avoid-break { break-inside: avoid; page-break-inside: avoid; }
+      .list li, .wait-block { break-inside: avoid; }
+
+      /* Tighten typography slightly */
+      .page-header { margin-bottom: 12px; }
+      .pill { border-color: rgba(107,30,45,0.55); }
+      .page h2, .card h3 { color: var(--accent); }
+      svg.chart text { font-size: 11px; }
+      canvas { image-rendering: -webkit-optimize-contrast; }
+
+      /* Word cloud fixed height to avoid clipping */
+      .word-cloud-frame{ height: 160mm !important; aspect-ratio: auto !important; }
+      .word-cloud-frame svg{ width:100% !important; height:100% !important; }
+    }
+  
+    .serif { font-family: Georgia, 'Times New Roman', Times, serif; }
+    .cover {
+      position: relative;
+      overflow: hidden;
+      background:
+        repeating-linear-gradient(90deg,
+          rgba(255,255,255,0.06) 0px,
+          rgba(255,255,255,0.06) 2px,
+          rgba(255,255,255,0.00) 2px,
+          rgba(255,255,255,0.00) 16px),
+        linear-gradient(180deg, #7a2436 0%, #5f1726 100%);
+      color: #f3eadf;
+      border-radius: 18px;
+    }
+    .cover::after{
+      content:'';
+      position:absolute; inset:-30%;
+      background: radial-gradient(circle at 20% 10%, rgba(199,178,153,0.22), transparent 55%),
+                  radial-gradient(circle at 80% 30%, rgba(199,178,153,0.14), transparent 60%);
+      transform: rotate(-6deg);
+      pointer-events:none;
+    }
+    .cover-inner{ position:relative; z-index:2; height:100%; padding:40mm 30mm; display:flex; flex-direction:column; justify-content:flex-start; gap:18px; }
+    .cover-kicker{ letter-spacing:2.2px; font-weight:900; font-size:14px; color: rgba(243,234,223,0.92); }
+    .cover-title{ font-size:54px; line-height:1.03; margin:0; }
+    .cover-title small{ display:block; font-size:22px; letter-spacing:2px; margin-top:12px; color: rgba(243,234,223,0.92); }
+    .cover-rule{ width: 90px; height: 3px; background: var(--gold); border-radius: 99px; }
+    .cover-body{ max-width: 620px; font-size:16px; color: rgba(243,234,223,0.94); }
+    .cover-footer{ position:absolute; bottom:22mm; left:0; right:0; text-align:center; margin:0; font-weight:800; color: rgba(243,234,223,0.90); }
+    .pill { background: rgba(199,178,153,0.16); color: #eadbc9; border: 1px solid rgba(199,178,153,0.35); }
+    .controls button { background: var(--accent); box-shadow: 0 10px 26px rgba(107,30,45,0.22); }
+    .controls .ghost { background: #2c1a20; }
+    .screen-nav a:hover { background: var(--accent-soft); color: var(--accent); }
+    .card { background: var(--card); border: 1px solid var(--line); }
+    .chart-box { border: 1px solid var(--line); }
+    .page-title { font-family: Georgia, 'Times New Roman', Times, serif; letter-spacing: -0.4px; }
+
+  
+
+    /* ==========================
+       WRAPPED 2025 THEME LAYER
+       ========================== */
+
+    /* Screen backdrop like a "stage" for pages */
+    body{
+      background:
+        radial-gradient(1000px 600px at 15% 10%, rgba(124,58,237,0.55), transparent 60%),
+        radial-gradient(900px 520px at 85% 25%, rgba(0,229,255,0.45), transparent 60%),
+        radial-gradient(900px 600px at 60% 95%, rgba(255,43,214,0.35), transparent 65%),
+        linear-gradient(180deg, #07070c 0%, #0b0b12 40%, #07070c 100%);
+      color: var(--text);
+    }
+
+    /* Softer page chrome */
+    .page{
+      position: relative;
+      overflow: hidden;
+      border-radius: 18px;
+      box-shadow: 0 18px 60px rgba(0,0,0,0.35);
+      border: 1px solid rgba(255,255,255,0.08);
+      background: var(--page);
+    }
+    @media print{
+      .page{
+        border-radius: 0;
+        box-shadow: none;
+        border: none;
+      }
+    }
+
+    /* Wrapped blobs & stepped blocks (inspired by graphic example) */
+    .page::before{
+      content:"";
+      position:absolute; inset:-40px -60px auto auto;
+      width: 520px; height: 420px;
+      background:
+        radial-gradient(circle at 35% 35%, rgba(255,43,214,0.35), transparent 55%),
+        radial-gradient(circle at 70% 30%, rgba(0,229,255,0.28), transparent 58%),
+        radial-gradient(circle at 45% 75%, rgba(182,255,0,0.20), transparent 62%);
+      filter: blur(2px);
+      pointer-events:none;
+      transform: rotate(8deg);
+    }
+    .page::after{
+      content:"";
+      position:absolute; inset:auto auto -60px -60px;
+      width: 560px; height: 480px;
+      background:
+        linear-gradient(90deg, rgba(0,229,255,0.22), rgba(255,43,214,0.18)),
+        repeating-linear-gradient(135deg,
+          rgba(124,58,237,0.18) 0 14px,
+          rgba(124,58,237,0.00) 14px 28px);
+      border-radius: 180px;
+      filter: blur(10px);
+      pointer-events:none;
+      transform: rotate(-10deg);
+    }
+
+    /* Keep content above blobs */
+    .page > * { position: relative; z-index: 1; }
+
+    /* Typography: more "Wrapped" */
+    h1,h2,h3{
+      letter-spacing: -0.02em;
+    }
+    .serif{ font-family: ui-serif, Georgia, "Times New Roman", Times, serif; }
+    .kpi .value{
+      letter-spacing: -0.03em;
+    }
+
+    /* Cards: glass + outline */
+    .card, .kpi, .kpi-card, .panel, .box, .mini-card{
+      background: var(--card) !important;
+      border: 1px solid rgba(0,0,0,0.06) !important;
+      box-shadow: 0 10px 24px rgba(0,0,0,0.08);
+      backdrop-filter: blur(6px);
+    }
+
+    /* Page headers: template-like left label + accent bar */
+    .page-header{
+      display:flex;
+      align-items:flex-end;
+      justify-content:space-between;
+      gap: 16px;
+      padding-bottom: 10px;
+      margin-bottom: 14px;
+      border-bottom: 1px solid rgba(0,0,0,0.08);
+      position: relative;
+    }
+    .page-header::after{
+      content:"";
+      position:absolute;
+      left:0; bottom:-1px;
+      width: 180px; height: 4px;
+      border-radius: 999px;
+      background: linear-gradient(90deg, var(--wrap-purple), var(--wrap-cyan), var(--wrap-pink));
+    }
+
+    /* Cover page: full bleed gradient + big year watermark */
+    .page.cover{
+      background:
+        radial-gradient(900px 560px at 25% 20%, rgba(124,58,237,0.70), transparent 60%),
+        radial-gradient(900px 520px at 80% 35%, rgba(0,229,255,0.55), transparent 62%),
+        radial-gradient(900px 620px at 55% 90%, rgba(255,43,214,0.50), transparent 66%),
+        linear-gradient(180deg, #05050a 0%, #0b0b12 55%, #05050a 100%);
+      color: #fff;
+      border: none;
+      box-shadow: 0 26px 90px rgba(0,0,0,0.55);
+    }
+    .page.cover::before, .page.cover::after{ display:none; }
+    .cover-inner{
+      position: relative;
+    }
+    .cover-year{
+      position:absolute;
+      top:-26px; left:-8px;
+      font-size: 180px;
+      line-height: 0.9;
+      font-weight: 800;
+      letter-spacing: -0.06em;
+      opacity: 0.16;
+      color: rgba(255,255,255,0.9);
+      mix-blend-mode: overlay;
+      pointer-events:none;
+    }
+    .cover-photo{
+      width: 160px; height: 160px;
+      border-radius: 999px;
+      border: 3px solid rgba(255,255,255,0.45);
+      box-shadow: 0 20px 50px rgba(0,0,0,0.55);
+      background:
+        radial-gradient(circle at 30% 30%, rgba(255,43,214,0.75), transparent 60%),
+        radial-gradient(circle at 70% 25%, rgba(0,229,255,0.65), transparent 62%),
+        radial-gradient(circle at 50% 80%, rgba(182,255,0,0.35), transparent 68%),
+        rgba(255,255,255,0.06);
+      margin: 22px auto 0;
+    }
+    .cover-title{
+      text-transform: uppercase;
+      letter-spacing: 0.02em;
+    }
+    .cover-rule{
+      background: linear-gradient(90deg, var(--wrap-purple), var(--wrap-cyan), var(--wrap-pink));
+      height: 4px;
+      border-radius: 999px;
+    }
+
+    /* Charts: slightly rounder + subtle frame */
+    canvas{
+      border-radius: 14px;
+    }
+
+    /* Print: keep cover readable */
+    @media print{
+      .page.cover{
+        color: #fff;
+        -webkit-print-color-adjust: exact;
+        print-color-adjust: exact;
+      }
+    }
+
+  
+/* --- Wrapped per-page printable background layer --- */
+.page{ position: relative; overflow: hidden; }
+.page-bg{
+  position:absolute;
+  inset:-18mm; /* extend beyond trim for nice bleed */
+  z-index:0;
+  pointer-events:none;
+}
+.page-bg svg{ width:100%; height:100%; display:block; }
+.page-content{ position:relative; z-index:1; padding: 20mm 18mm; }
+
+/* Print: force backgrounds & colors */
+@media print{
+  *{ -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; }
+}
+
+
+/* --- Export (PNG/ZIP) overrides: remove rounded corners, shadows; ensure full-bleed capture --- */
+html.exporting .page,
+html.exporting .sheet,
+html.exporting .print-page {
+  border-radius: 0 !important;
+  box-shadow: none !important;
+  outline: none !important;
+}
+html.exporting .page-bg,
+html.exporting .sheet-bg {
+  border-radius: 0 !important;
+}
+html.exporting body {
+  background: transparent !important;
+}
+
+
+/* --- EXPORT STAGE (offscreen) --- */
+#exportStage.export-stage{
+  position: fixed;
+  left: -100000px;
+  top: 0;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+
+/* === MOBILE WRAPPED (scrollable, snap, readable) === */
+@media screen and (max-width: 820px){
+  body{ background: #0b0b10; }
+  .controls, .no-print{ display:none !important; }
+  .pages{
+    max-width: none;
+    padding: 0;
+    margin: 0;
+    scroll-snap-type: y mandatory;
+  }
+  .page{
+    width: 100vw !important;
+    min-height: 100svh !important;
+    margin: 0 !important;
+    border-radius: 0 !important;
+    box-shadow: none !important;
+    scroll-snap-align: start;
+    scroll-snap-stop: always;
+    overflow: hidden;
+  }
+  .page > *{ max-width: 980px; margin-left:auto; margin-right:auto; }
+  .page{ padding-left: 18px; padding-right: 18px; padding-bottom: calc(28px + env(safe-area-inset-bottom)); }
+  .page-header{ padding-top: 18px; }
+  .kpi-value{ font-size: clamp(28px, 8vw, 44px); }
+  .two-col, .split.two{ grid-template-columns: 1fr !important; }
+  .emoji-list{ grid-template-columns: repeat(4, minmax(0,1fr)) !important; }
+}
+
+/* === Sticker grid (emoji-like) === */
+.sticker-grid{
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 10px;
+}
+@media screen and (min-width: 821px){
+  .sticker-grid{ grid-template-columns: repeat(6, minmax(0, 1fr)); }
+}
+.sticker-emoji{
+  position: relative;
+  border: 1px solid rgba(255,255,255,0.12);
+  background: rgba(255,255,255,0.06);
+  border-radius: 16px;
+  padding: 10px;
+  aspect-ratio: 1 / 1;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  cursor:pointer;
+}
+.sticker-emoji img{
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  image-rendering: auto;
+  filter: drop-shadow(0 10px 18px rgba(0,0,0,0.35));
+}
+.sticker-badge{
+  position: absolute;
+  right: 8px;
+  bottom: 8px;
+  font-size: 12px;
+  padding: 4px 8px;
+  border-radius: 999px;
+  background: rgba(0,0,0,0.6);
+  border: 1px solid rgba(255,255,255,0.18);
+}
+
+/* === GSM bars + top list === */
+.barlist{ display:flex; flex-direction:column; gap:10px; margin-top:10px; }
+.barrow{ display:grid; grid-template-columns: 64px 1fr 56px; gap:10px; align-items:center; }
+.barlabel{ font-size: 12px; opacity: .9; }
+.bartrack{ height: 10px; border-radius: 999px; background: rgba(255,255,255,0.10); overflow:hidden; }
+.barfill{ height: 100%; border-radius: 999px; background: rgba(34,197,94,0.85); }
+.barvalue{ text-align:right; font-size: 12px; opacity:.9; }
+.big-insight{ font-size: 34px; font-weight: 800; line-height: 1.05; margin-top: 8px; }
+.toplist{ list-style: none; padding: 0; margin: 10px 0 0; display:flex; flex-direction:column; gap:8px; }
+.toplist li{ display:flex; align-items:center; justify-content:space-between; gap:10px; padding: 10px 12px; border-radius: 14px; border: 1px solid rgba(255,255,255,0.10); background: rgba(255,255,255,0.06); }
+.toplist li b{ white-space:nowrap; }
+
+/* === Sticker modal === */
+.sticker-modal{
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.68);
+  display: none;
+  align-items: center;
+  justify-content: center;
+  padding: 18px;
+  z-index: 9999;
+}
+.sticker-modal.open{ display:flex; }
+.sticker-modal-card{
+  width: min(520px, 100%);
+  border-radius: 22px;
+  border: 1px solid rgba(255,255,255,0.12);
+  background: rgba(20,20,28,0.92);
+  backdrop-filter: blur(10px);
+  padding: 18px;
+}
+.sticker-modal-card img{
+  width: 100%;
+  height: 320px;
+  object-fit: contain;
+  filter: drop-shadow(0 16px 30px rgba(0,0,0,0.45));
+}
+.sticker-modal-meta{ margin-top: 10px; opacity: .9; font-size: 13px; }
+
+</style>
+
+<style id="wrappedTheme">
+  /* === WRAPPED-STYLE SCREEN THEME (keeps A4 print fidelity) === */
+  :root{
+    --bg:#0b0b10;
+    --page:#0f1220;
+    --text:#f5f7ff;
+    --muted:rgba(245,247,255,0.72);
+    --line:rgba(255,255,255,0.14);
+    --card:rgba(255,255,255,0.06);
+    --card2:rgba(255,255,255,0.09);
+    --shadow: 0 18px 50px rgba(0,0,0,0.45);
+    --radius: 22px;
+
+    /* Wrapped-ish accents (not Spotify exact) */
+    --a1:#22c55e;
+    --a2:#8b5cf6;
+    --a3:#f97316;
+    --a4:#06b6d4;
+    --a5:#fb7185;
+    --a6:#facc15;
+  }
+
+  body{
+    background:
+      radial-gradient(1200px 900px at 10% 10%, rgba(139,92,246,0.22), transparent 60%),
+      radial-gradient(900px 700px at 90% 20%, rgba(34,197,94,0.18), transparent 55%),
+      radial-gradient(1000px 900px at 60% 90%, rgba(6,182,212,0.14), transparent 60%),
+      var(--bg);
+    color: var(--text);
+  }
+
+  /* Top controls: dark glass */
+  .controls, .screen-nav{
+    background: rgba(10,12,20,0.78) !important;
+    border-bottom: 1px solid rgba(255,255,255,0.10) !important;
+    backdrop-filter: blur(16px);
+  }
+  .controls label{ color: rgba(245,247,255,0.70) !important; }
+  .controls input[type=file]{
+    background: rgba(255,255,255,0.06) !important;
+    color: var(--text) !important;
+    border: 1px solid rgba(255,255,255,0.16) !important;
+  }
+  .controls button{
+    background: linear-gradient(90deg, rgba(34,197,94,0.92), rgba(6,182,212,0.92)) !important;
+    box-shadow: 0 18px 44px rgba(34,197,94,0.16) !important;
+  }
+  .controls .ghost{
+    background: rgba(255,255,255,0.10) !important;
+    color: var(--text) !important;
+    border: 1px solid rgba(255,255,255,0.14);
+  }
+  .pill{
+    background: rgba(255,255,255,0.06) !important;
+    border: 1px solid rgba(255,255,255,0.16) !important;
+    color: rgba(245,247,255,0.88) !important;
+  }
+
+  .screen-nav a{
+    background: rgba(255,255,255,0.06) !important;
+    border: 1px solid rgba(255,255,255,0.12) !important;
+    color: rgba(245,247,255,0.72) !important;
+  }
+  .screen-nav a:hover{
+    background: rgba(255,255,255,0.12) !important;
+    color: var(--text) !important;
+  }
+
+  .pages{
+    max-width: 1040px;
+    margin: 0 auto 72px;
+    padding: 18px 14px 64px;
+  }
+
+  /* Screen: give Wrapped "slides" feeling */
+  @media screen{
+    html{ scroll-behavior: smooth; }
+    .pages{
+      scroll-snap-type: y proximity;
+    }
+    .page{
+      scroll-snap-align: start;
+    }
+  }
+
+  .page{
+    background: linear-gradient(180deg, rgba(255,255,255,0.05), rgba(255,255,255,0.02)) , var(--page) !important;
+    border: 1px solid rgba(255,255,255,0.10) !important;
+    box-shadow: var(--shadow) !important;
+    border-radius: var(--radius) !important;
+    overflow: hidden;
+  }
+
+  /* Wrapped-esque top ribbon per page */
+  .page::before{
+    content:"";
+    display:block;
+    height: 10mm;
+    background: linear-gradient(90deg, var(--a2), var(--a1), var(--a4), var(--a3));
+    opacity: 0.95;
+  }
+
+  /* Cover: more Wrapped-like, less "classic" */
+  .page.cover{
+    background:
+      radial-gradient(900px 700px at 15% 15%, rgba(139,92,246,0.55), transparent 55%),
+      radial-gradient(850px 650px at 85% 25%, rgba(34,197,94,0.42), transparent 55%),
+      radial-gradient(900px 650px at 50% 95%, rgba(249,115,22,0.28), transparent 60%),
+      #070810 !important;
+    border: 1px solid rgba(255,255,255,0.10) !important;
+  }
+  .page.cover::before{ height:0; }
+
+  .cover-kicker{
+    font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial;
+    letter-spacing: 0.22em !important;
+    font-weight: 900 !important;
+    color: rgba(245,247,255,0.82) !important;
+  }
+  .cover-title{
+    font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial !important;
+    font-weight: 900 !important;
+    letter-spacing: -0.02em !important;
+    text-transform: uppercase;
+  }
+  .cover-title small{
+    font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial !important;
+    letter-spacing: 0.18em !important;
+    opacity: 0.92;
+  }
+  .cover-rule{ background: rgba(255,255,255,0.24) !important; }
+  .cover-body{ color: rgba(245,247,255,0.78) !important; }
+
+  .page-title{
+    font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial !important;
+    color: var(--text) !important;
+    font-weight: 900 !important;
+    letter-spacing: -0.04em !important;
+    font-size: 34px !important;
+  }
+  .page-sub{ color: rgba(245,247,255,0.72) !important; }
+
+  .card{
+    background: linear-gradient(180deg, rgba(255,255,255,0.08), rgba(255,255,255,0.05)) !important;
+    border: 1px solid rgba(255,255,255,0.12) !important;
+    border-radius: 18px !important;
+    box-shadow: inset 0 1px 0 rgba(255,255,255,0.08);
+  }
+  .card h3{
+    color: rgba(245,247,255,0.92) !important;
+    font-weight: 900 !important;
+    letter-spacing: -0.02em;
+    text-transform: uppercase;
+    font-size: 13px !important;
+  }
+  .muted, .note{ color: rgba(245,247,255,0.70) !important; }
+
+  .kpi{
+    font-size: 38px !important;
+    font-weight: 950 !important;
+    letter-spacing: -0.03em;
+  }
+
+  .list li{
+    background: rgba(255,255,255,0.06) !important;
+    border: 1px solid rgba(255,255,255,0.12) !important;
+    color: rgba(245,247,255,0.90) !important;
+  }
+
+  .chart-box{
+    background: rgba(255,255,255,0.04) !important;
+    border: 1px solid rgba(255,255,255,0.12) !important;
+    border-radius: 18px !important;
+  }
+
+  /* Make charts crisp */
+  canvas{ image-rendering: auto; }
+
+  /* Debug panel: darker */
+  .debug{
+    background: rgba(5,6,12,0.86) !important;
+    border: 1px solid rgba(255,255,255,0.12);
+  }
+
+  /* Reply wait block styling */
+  .wait-block{
+    margin-top: 12px;
+    border: 1px solid rgba(255,255,255,0.12);
+    border-radius: 16px;
+    padding: 12px;
+    background: rgba(255,255,255,0.04);
+  }
+  .wait-head{
+    display:flex;
+    align-items:baseline;
+    justify-content:space-between;
+    gap: 10px;
+    margin-bottom: 8px;
+  }
+  .wait-title{
+    font-weight: 950;
+    letter-spacing: -0.02em;
+  }
+  .wait-row{
+    display:grid;
+    grid-template-columns: 140px 80px 1fr;
+    gap: 10px;
+    padding: 8px 10px;
+    border-radius: 12px;
+    background: rgba(255,255,255,0.05);
+    border: 1px solid rgba(255,255,255,0.10);
+    margin-top: 8px;
+  }
+  .wait-sender{ font-weight: 900; color: rgba(245,247,255,0.92); }
+  .wait-time{ color: rgba(245,247,255,0.70); font-weight: 800; }
+  .wait-text{ color: rgba(245,247,255,0.86); }
+
+  /* Word cloud frame */
+  .word-cloud-frame{
+    background: rgba(255,255,255,0.04) !important;
+    border: 1px solid rgba(255,255,255,0.12) !important;
+  }
+
+  /* Textarea */
+  .closing-input{
+    background: rgba(255,255,255,0.06) !important;
+    border: 1px solid rgba(255,255,255,0.16) !important;
+    color: var(--text) !important;
+  }
+
+  /* === PRINT: preserve your A4 layout, ensure readable colors === */
+  @media print{
+    body{ background:#fff !important; color:#111 !important; }
+    .page{ border-radius:0 !important; box-shadow:none !important; border:none !important; background:#fff !important; }
+    .page::before{ display:none !important; }
+    .card{ background:#fff !important; border:1px solid #ddd !important; }
+    .page-title, .card h3{ color:#111 !important; }
+    .muted, .note{ color:#444 !important; }
+    .list li{ background:#fff !important; border:1px solid #ddd !important; color:#111 !important; }
+    .chart-box{ background:#fff !important; border:1px solid #ddd !important; }
+    .debug{ display:none !important; }
+  }
+</style>
+
+</head>
+<body>
+  <div class="controls no-print">
+    <div>
+      <label>Sohbet .txt</label>
+      <input type="file" id="fileInput" accept="text/plain">
+    </div>
+    <div>
+      <label>Medya klasörü (opsiyonel)</label>
+      <input type="file" id="mediaInput" webkitdirectory directory multiple>
+    </div>
+    <div class="flex" style="display:flex;gap:10px;align-items:center;flex-wrap:wrap;">
+      <button id="analyzeBtn">Analiz Et</button>
+      <button id="preparePrintBtn">PDF’e Hazırla</button>
+      <button id="exportPngZipBtn" class="secondary">PNG ZIP (300 DPI)</button>
+      <span id="exportStatus" class="pill" style="display:none;"></span>
+      <button id="toggleFullBtn" class="ghost">Tüm listeleri göster</button>
+      <span class="pill">İpucu: Dosyayı seç, analiz et, PDF’e hazırlayıp yazdır (arka plan grafiklerini aç).</span>
+    </div>
+  </div>
+  <div class="screen-nav no-print" id="nav"></div>
+  <div id="content" class="pages"></div>
+  <div id="debug" class="debug hidden"></div>
+
+  <script>
+    const TURKISH_STOP = new Set(['ve','veya','ile','ama','fakat','lakin','de','da','ki','bu','su','şu','o','bir','bi','ne','mi','mı','mu','mü','için','gibi','çünkü','ya','sen','ben','biz','siz','onlar','şimdi','daha','çok','az','her','en','ile','ya','yao','diye','di','değil','vardı','böyle','hala','hem','hep','hepimiz','yani','ise','yada','veya','veya','şey','aslında','muhtemelen','mı','mi','mu','mü','şu','falan','filan','bugün','yarın','akşam','sabah','öğlen','sonra','önce']);
+    const ROMANTIC = ['aşkım','canım','bebeğim','tatlım','seviyorum','seni seviyorum','özledim','sevgilim','kalbim','hayatım','prenses','prensim','balım','güzelim','yavrum','çekim'];
+    const DATEI_TOKENS = ['date','datei','date\'i','date’i','date i','date\'i','datei\'','datei’','datee','datee\'i','datee’i','date\'ler','dateler'];
+    const TOPIC_CATS = {
+      'İş & okul': ['iş','ofis','mesai','sınav','okul','ders','ödev','proje','toplantı','müşteri','teklif','fiyat','termin','mail','e-posta','email','satınalma','satın alma','sevkiyat','sipariş','rapor','sunum','pdf','excel','veri','skf','rulman','yalçın','yücel','yasemin','emre','ziyaret','görüşme','meeting','work','quote','rfq'],
+      'Yemek & kahve': ['kahve','yemek','restoran','kahvaltı','akşam yemeği','çay','pizza','burger','tatlı','simit','dürüm','kebap'],
+      'Ulaşım & yol': ['metro','otobüs','uçak','uçuş','havaalanı','trafik','yol','taksi','uber','marmaray','dolmuş'],
+      'Seyahat & tatil': ['otel','tatil','rezervasyon','uçuş','bilet','uçak','gezi','gezmek','tatilde','valiz'],
+      'Aile & arkadaş': ['annem','babam','kardeşim','arkadaş','dost','kuzen','ailem','düğün','nişan'],
+      'Sağlık & spor': ['spor','koşu','yürüyüş','fitness','sağlık','ilaç','hastane','ağrı','yoga','doktor','tahlil'],
+      'Eğlence & film': ['film','dizi','netflix','sinema','oyun','oynadım','fragman','konser','müzik','youtube'],
+      'Teknoloji': ['telefon','bilgisayar','uygulama','kod','api','internet','şarj','kulaklık','bug','hata','html','js','javascript'],
+      'Para & alışveriş': ['alışveriş','fiyat','indirim','para','maaş','ödeme','kart','market','fatura','kira'],
+      'Hava & gün': ['hava','yağmur','güneş','soğuk','sıcak','mevsim','bahar','kış','yaz','sonbahar'],
+      'Duygu & motivasyon': ['mutlu','üzgün','mutsuz','sinir','heyecan','motive','enerji','yorgun','stres','özledim'],
+      'Plan & etkinlik': ['plan','buluşma','event','etkinlik','parti','doğum günü','kutlama','program','ajanda']
+    };
+
+    const laughRegex = /(?:😂|🤣|haha|ahah|kdkd|sjsj|xdd|:p)/i;
+    const urlRegex = /(https?:\/\/[^\s]+|www\.[^\s]+)/gi;
+
+    function looksLikeLaugh(text){
+      if(!text) return false;
+      const normalized = normalizeText(text);
+      const smash = /[ahsjdkgp]{4,}/i;
+      const burst = /(haha|ahah|sjsj|kdkd|lol|lmao|x?dd)/i;
+      return laughRegex.test(text) || burst.test(normalized) || smash.test(normalized);
+    }
+
+    function scoreLaughBurst(text){
+      const emojis = (text.match(/😂|🤣/g)||[]).length;
+      const lenBonus = Math.min(Math.max(text.length-4,0)/10, 3);
+      return 1 + emojis + lenBonus;
+    }
+
+    function getStorage(){
+      try { if (typeof localStorage !== 'undefined') return localStorage; } catch(e){}
+      const mem = {};
+      return {
+        getItem:k=> (k in mem ? mem[k] : null),
+        setItem:(k,v)=> { mem[k]=String(v); },
+        removeItem:k=> { delete mem[k]; }
+      };
+    }
+
+    const STORAGE = getStorage();
+
+    // === GSM call stats (authoritative from 5388881237.xlsx) ===
+    const GSM_STATS = {"totalCalls": 240, "totalMinutes": 4388.9, "totalHours": 73.1, "avgMinutes": 18.29, "maxMinutes": 120.0, "minSeconds": 10, "mostDay": "2025-11-10", "mostDayMinutes": 176.5, "topHour": 21, "topHourMinutes": 882.2, "monthSeries": [{"month": "2025-04", "minutes": 42.7}, {"month": "2025-05", "minutes": 261.6}, {"month": "2025-06", "minutes": 615.0}, {"month": "2025-07", "minutes": 494.9}, {"month": "2025-08", "minutes": 706.1}, {"month": "2025-09", "minutes": 426.3}, {"month": "2025-10", "minutes": 935.1}, {"month": "2025-11", "minutes": 524.8}, {"month": "2025-12", "minutes": 382.4}], "hourSeries": [{"hour": 4, "minutes": 16.9}, {"hour": 5, "minutes": 13.3}, {"hour": 6, "minutes": 20.1}, {"hour": 8, "minutes": 90.6}, {"hour": 9, "minutes": 100.1}, {"hour": 10, "minutes": 95.9}, {"hour": 11, "minutes": 112.2}, {"hour": 12, "minutes": 103.3}, {"hour": 13, "minutes": 360.8}, {"hour": 14, "minutes": 74.0}, {"hour": 15, "minutes": 120.2}, {"hour": 16, "minutes": 298.9}, {"hour": 17, "minutes": 389.8}, {"hour": 18, "minutes": 581.3}, {"hour": 19, "minutes": 367.7}, {"hour": 20, "minutes": 446.2}, {"hour": 21, "minutes": 882.2}, {"hour": 22, "minutes": 270.4}, {"hour": 23, "minutes": 45.0}], "top5": [{"datetime": "22.06.2025 21:37", "minutes": 120.0}, {"datetime": "10.11.2025 20:02", "minutes": 117.0}, {"datetime": "19.07.2025 16:29", "minutes": 108.1}, {"datetime": "06.08.2025 19:09", "minutes": 100.0}, {"datetime": "03.06.2025 21:55", "minutes": 91.3}]};
+
+    // === Top stickers (authoritative from whatsapp_sticker_analizi.txt) ===
+    const TOP_STICKERS = [{"id": "00017935-STICKER-2025-05-10-23-36-28", "label": "", "count": 37, "sizeBytes": 46458, "src": "/stickers/00017935-STICKER-2025-05-10-23-36-28.webp"}, {"id": "00056390-STICKER-2025-09-13-22-45-21", "label": "", "count": 30, "sizeBytes": 153702, "src": "/stickers/00056390-STICKER-2025-09-13-22-45-21.webp"}, {"id": "00056376-STICKER-2025-09-13-22-33-41", "label": "", "count": 25, "sizeBytes": 142899, "src": "/stickers/00056376-STICKER-2025-09-13-22-33-41.webp"}, {"id": "00032537-STICKER-2025-06-20-20-12-54", "label": "", "count": 19, "sizeBytes": 16322, "src": "/stickers/00032537-STICKER-2025-06-20-20-12-54.webp"}, {"id": "00032273-STICKER-2025-06-20-13-51-04", "label": "", "count": 18, "sizeBytes": 12840, "src": "/stickers/00032273-STICKER-2025-06-20-13-51-04.webp"}, {"id": "00019106-STICKER-2025-05-13-08-51-15", "label": "", "count": 15, "sizeBytes": 78510, "src": "/stickers/00019106-STICKER-2025-05-13-08-51-15.webp"}, {"id": "00056397-STICKER-2025-09-13-22-58-26", "label": "", "count": 14, "sizeBytes": 169431, "src": "/stickers/00056397-STICKER-2025-09-13-22-58-26.webp"}, {"id": "00060585-STICKER-2025-10-06-17-37-37", "label": "", "count": 12, "sizeBytes": 14315, "src": "/stickers/00060585-STICKER-2025-10-06-17-37-37.webp"}, {"id": "00051448-STICKER-2025-08-17-22-45-29", "label": "", "count": 11, "sizeBytes": 156897, "src": "/stickers/00051448-STICKER-2025-08-17-22-45-29.webp"}, {"id": "00022000-STICKER-2025-05-19-19-47-52", "label": "", "count": 10, "sizeBytes": 50647, "src": "/stickers/00022000-STICKER-2025-05-19-19-47-52.webp"}, {"id": "00056386-STICKER-2025-09-13-22-41-00", "label": "", "count": 10, "sizeBytes": 154992, "src": "/stickers/00056386-STICKER-2025-09-13-22-41-00.webp"}, {"id": "00018976-STICKER-2025-05-12-15-59-51", "label": "", "count": 9, "sizeBytes": 16302, "src": "/stickers/00018976-STICKER-2025-05-12-15-59-51.webp"}, {"id": "00032539-STICKER-2025-06-20-20-13-13", "label": "", "count": 8, "sizeBytes": 12779, "src": "/stickers/00032539-STICKER-2025-06-20-20-13-13.webp"}, {"id": "00051452-STICKER-2025-08-17-22-52-37", "label": "", "count": 8, "sizeBytes": 172472, "src": "/stickers/00051452-STICKER-2025-08-17-22-52-37.webp"}, {"id": "00017960-STICKER-2025-05-10-23-55-18", "label": "", "count": 6, "sizeBytes": 97208, "src": "/stickers/00017960-STICKER-2025-05-10-23-55-18.webp"}, {"id": "00030135-STICKER-2025-06-11-06-01-04", "label": "", "count": 6, "sizeBytes": 102686, "src": "/stickers/00030135-STICKER-2025-06-11-06-01-04.webp"}, {"id": "00051641-STICKER-2025-08-19-11-01-26", "label": "", "count": 6, "sizeBytes": 189736, "src": "/stickers/00051641-STICKER-2025-08-19-11-01-26.webp"}, {"id": "00018573-STICKER-2025-05-11-23-09-52", "label": "", "count": 5, "sizeBytes": 17018, "src": "/stickers/00018573-STICKER-2025-05-11-23-09-52.webp"}, {"id": "00018135-STICKER-2025-05-11-00-20-13", "label": "", "count": 5, "sizeBytes": 48179, "src": "/stickers/00018135-STICKER-2025-05-11-00-20-13.webp"}, {"id": "00056394-STICKER-2025-09-13-22-47-52", "label": "", "count": 5, "sizeBytes": 76974, "src": "/stickers/00056394-STICKER-2025-09-13-22-47-52.webp"}, {"id": "00051644-STICKER-2025-08-19-11-14-17", "label": "", "count": 5, "sizeBytes": 89548, "src": "/stickers/00051644-STICKER-2025-08-19-11-14-17.webp"}, {"id": "00056377-STICKER-2025-09-13-22-33-49", "label": "", "count": 5, "sizeBytes": 128481, "src": "/stickers/00056377-STICKER-2025-09-13-22-33-49.webp"}, {"id": "00062561-STICKER-2025-10-17-22-16-34", "label": "", "count": 4, "sizeBytes": 12748, "src": "/stickers/00062561-STICKER-2025-10-17-22-16-34.webp"}, {"id": "00018019-STICKER-2025-05-11-00-01-42", "label": "", "count": 4, "sizeBytes": 42844, "src": "/stickers/00018019-STICKER-2025-05-11-00-01-42.webp"}];
+
+    const contentEl = document.getElementById('content');
+    const debugEl = document.getElementById('debug');
+    const preparePrintBtn = document.getElementById('preparePrintBtn');
+    const navEl = document.getElementById('nav');
+    
+    function localStorageSafeGet(key){
+      try{
+        if(typeof localStorage==='undefined') return null;
+        return localStorage.getItem(key);
+      }catch(e){ return null; }
+    }
+    function localStorageSafeSet(key,val){
+      try{
+        if(typeof localStorage==='undefined') return;
+        localStorage.setItem(key, String(val));
+      }catch(e){}
+    }
+
+let showFull = false;
+
+    let latestAgg = null;
+    let latestParsed = null;
+    let latestPages = [];
+    const wordCloudConfig = {
+      maxWordsScreen: 140,
+      maxWordsPrint: 120,
+      minFont: 16,
+      maxFont: 86,
+      minFrequency: 2,
+      rotationRatio: 0.28,
+      allowRotate: true
+    };
+    const WORD_CLOUD_PALETTE = ['#34d399','#22d3ee','#f59e0b','#f472b6','#eab308','#60a5fa','#a855f7','#2dd4bf','#fb7185','#38bdf8','#f97316','#f43f5e','#10b981','#c084fc','#8b5cf6','#facc15'];
+
+    function createAnalysisWorker(){
+      const code = `
+        const TURKISH_STOP = new Set(${JSON.stringify([...TURKISH_STOP])});
+        const ROMANTIC = ${JSON.stringify(ROMANTIC)};
+        const DATEI_TOKENS = ${JSON.stringify(DATEI_TOKENS)};
+        const TOPIC_CATS = ${JSON.stringify(TOPIC_CATS)};
+        const WORD_CLOUD_PALETTE = ${JSON.stringify(WORD_CLOUD_PALETTE)};
+        const urlRegex = ${urlRegex.toString()};
+        const laughRegex = ${laughRegex.toString()};
+        ${stripUrls.toString()};
+        ${dayKey.toString()};
+        ${monthKey.toString()};
+        ${hourOfDay.toString()};
+        ${weekday.toString()};
+        ${weekKey.toString()};
+        ${bucketRange.toString()};
+        ${tokenize.toString()};
+        ${stripDiacritics.toString()};
+        ${normalizeText.toString()};
+        ${extractEmojiTokens.toString()};
+        ${isEmojiCluster.toString()};
+        ${looksLikeLaugh.toString()};
+        ${scoreLaughBurst.toString()};
+        ${classify.toString()};
+        ${parseChat.toString()};
+        ${parseDuration.toString()};
+        ${bucketReply.toString()};
+        ${computeStickers.toString()};
+        ${fillWeek.toString()};
+        ${buildOverlay.toString()};
+        ${computeAnalytics.toString()};
+        self.onmessage = (e)=>{
+          const {text, stickerIndex} = e.data;
+          const parsed = parseChat(text);
+          const agg = computeAnalytics(parsed.messages, parsed.range, stickerIndex||[]);
+          self.postMessage({parsed:{...parsed, messagesCount: parsed.messages.length}, agg});
+        };
+      `;
+      const blob = new Blob([code], {type:'application/javascript'});
+      const worker = new Worker(URL.createObjectURL(blob));
+      return worker;
+    }
+
+    const analysisWorker = createAnalysisWorker();
+    analysisWorker.onerror = (err)=>{
+      debugEl.classList.remove('hidden');
+      debugEl.textContent = 'Worker error: '+(err.message||err.filename||'bilinmiyor');
+      console.error('Worker error', err);
+      alert('Analiz işçisinde hata: '+(err.message||err));
+    };
+
+    document.getElementById('analyzeBtn').addEventListener('click', handleAnalyze);
+    preparePrintBtn.addEventListener('click', prepareForPDF);
+    document.getElementById('toggleFullBtn').addEventListener('click', ()=>{
+      showFull = !showFull;
+      document.body.classList.toggle('show-full', showFull);
+    });
+
+    let mediaFiles = [];
+    document.getElementById('mediaInput').addEventListener('change', (e)=>{
+      mediaFiles = Array.from(e.target.files || []);
+    });
+
+    async function handleAnalyze(){
+      try {
+        const file = document.getElementById('fileInput').files[0];
+        if(!file){ alert('Lütfen sohbet .txt dosyasını seçin'); return; }
+        const text = await file.text();
+        const stickerIndex = await buildStickerIndex(mediaFiles);
+        const wait = new Promise((resolve)=>{
+          analysisWorker.onmessage = (e)=>resolve(e.data);
+        });
+        analysisWorker.postMessage({text, stickerIndex});
+        const {parsed, agg} = await wait;
+        const enrichedAgg = {...agg, stickerGroups: enrichStickerLabels(agg.stickerGroups)};
+        latestAgg = enrichedAgg;
+        latestParsed = parsed;
+        renderAll(parsed, enrichedAgg);
+        renderDebug(parsed, enrichedAgg);
+      } catch(err){
+        console.error('Analiz hatası', err);
+        debugEl.classList.remove('hidden');
+        debugEl.innerHTML = '<strong>Hata</strong><br>'+ (err?.stack||err?.message||err);
+        alert('Analiz sırasında hata oluştu: '+(err?.message||err));
+      }
+    }
+
+    function freezeCanvasesForPrint(){
+      document.querySelectorAll('canvas').forEach(canvas => {
+        const rect = canvas.getBoundingClientRect();
+        const width = Math.max(1, Math.round(rect.width || canvas.clientWidth || canvas.width));
+        const height = Math.max(1, Math.round(rect.height || canvas.clientHeight || canvas.height));
+        const exportCanvas = document.createElement('canvas');
+        exportCanvas.width = width;
+        exportCanvas.height = height;
+        const ctx = exportCanvas.getContext('2d');
+        try {
+          ctx.drawImage(canvas, 0, 0, width, height);
+        } catch (e) {
+          exportCanvas.width = canvas.width;
+          exportCanvas.height = canvas.height;
+          ctx.drawImage(canvas, 0, 0);
+        }
+        const img = document.createElement('img');
+        img.src = exportCanvas.toDataURL('image/png');
+        img.style.width = width + 'px';
+        img.style.height = height + 'px';
+        img.className = 'print-canvas-image';
+        canvas.replaceWith(img);
+      });
+    }
+
+    function nextFrame(){
+      return new Promise(r=>requestAnimationFrame(()=>r()));
+    }
+
+    function forceDrawAllCanvases(agg,{mode='screen'}={}){
+      if(!agg) return;
+      document.querySelectorAll('canvas[data-type]').forEach(cv=>{
+        const type=cv.dataset.type;
+        if(type==='line') drawLineChart(cv, agg.daily);
+        else if(type==='month') drawBarChartMonth(cv, agg.monthly);
+        else if(type==='hours') drawBarChartHours(cv, agg.hourly);
+        else if(type==='week') drawBarChartWeekdays(cv, agg.weekDay);
+        else if(type==='hist') drawHistogram(cv, agg.hist);
+        else if(type==='dateweek') drawMapChart(cv, agg.dateWeek);
+        else if(type==='overlay') drawOverlay(cv, agg.weeklyOverlay);
+        else if(type==='wordcloud') drawWordCloud(cv, agg, mode);
+      });
+    }
+
+    async function prepareForPDF(){
+      if(!latestAgg || !latestPages?.length){
+        alert('Önce Analiz Et ile veriyi üretmelisin');
+        return;
+      }
+      document.body.classList.add('print-mode');
+
+      renderAllPagesSync(latestPages, latestAgg);
+      await nextFrame(); await nextFrame();
+      forceDrawAllCanvases(latestAgg, {mode:'print'});
+      await nextFrame();
+      freezeCanvasesForPrint();
+      setTimeout(()=>window.print(), 50);
+    }
+    window.addEventListener('afterprint', ()=>{
+      document.body.classList.remove('print-mode');
+      if(latestParsed && latestAgg){
+        renderAll(latestParsed, latestAgg);
+      }
+    });
+
+    function parseChat(text){
+      const lines = text.split(/\r?\n/);
+      const msgPattern = /^\[(\d{1,2})\.(\d{1,2})\.(\d{4}) (\d{2}):(\d{2}):(\d{2})\] ([^:]+): (.*)$/;
+      const messages=[]; let parseErrors=0; let current=null; let range={min:null,max:null};
+      const pushCurrent=()=>{ if(!current) return; const kind = classify(current.rawText); current.kind=kind; if(kind==='system'||kind==='deleted'){ current=null; return;} current.cleanText = stripUrls(current.rawText); messages.push(current); if(!range.min||current.ts<range.min) range.min=current.ts; if(!range.max||current.ts>range.max) range.max=current.ts; current=null; };
+      for(const line of lines){
+        const m = line.match(msgPattern);
+        if(m){
+          pushCurrent();
+          const [_,d,mo,y,hh,mm,ss,name,rest] = m;
+          const ts = new Date(Number(y), Number(mo)-1, Number(d), Number(hh), Number(mm), Number(ss));
+          current = {ts, sender:name.trim(), rawText:rest};
+        } else {
+          if(current){ current.rawText += "\n"+line; }
+          else { parseErrors++; }
+        }
+      }
+      pushCurrent();
+      return {messages, parseErrors, lines:lines.length, range};
+    }
+
+    function classify(text){
+      if(!text) return 'text';
+      if(/Bu mesaj silindi/i.test(text)) return 'deleted';
+      if(/gruba eklendi|gruptan çıkarıldı|uçtan uca|şifrelenmişt|görüntü dahil edildi|görüntü dahil edilmedi|video dahil edildi|ses dahil edildi|sticker dahil edildi|<media omitted>ir|grup bilgisi|mesajlar ve aramalar|Bu mesajı düzenledi|mesajı düzenledi|Mesaj düzenlendi|mesaj düzenlendi|Bu mesaj silindi/i.test(text)) return 'system';
+      if(/<[^>]*-PHOTO-[^>]*>/i.test(text)) return 'photo';
+      if(/<[^>]*-VIDEO-[^>]*>/i.test(text)) return 'video';
+      if(/<[^>]*-AUDIO-[^>]*>/i.test(text)) return 'audio';
+      if(/<[^>]*-STICKER-[^>]*>/i.test(text)) return 'sticker';
+      if(/Görüntülü arama\. .*Cevaplanmadı/i.test(text)) return 'call_video_missed';
+      if(/Sesli arama\. .*Cevaplanmadı/i.test(text)) return 'call_voice_missed';
+      if(/Görüntülü arama\./i.test(text) && /saat|dk|sn\./i.test(text)) return 'call_video_answered';
+      if(/Sesli arama\./i.test(text) && /saat|dk|sn\./i.test(text)) return 'call_voice_answered';
+      return 'text';
+    }
+
+    function stripUrls(t){
+      return (t||'').replace(urlRegex,'').trim();
+    }
+
+    function dayKey(ts){ return `${ts.getFullYear()}-${String(ts.getMonth()+1).padStart(2,'0')}-${String(ts.getDate()).padStart(2,'0')}`; }
+    function monthKey(ts){ return `${ts.getFullYear()}-${String(ts.getMonth()+1).padStart(2,'0')}`; }
+    function hourOfDay(ts){ return ts.getHours(); }
+    function weekday(ts){ return (ts.getDay()+6)%7; }
+
+    function weekKey(ts){
+      const d = new Date(ts.getFullYear(), ts.getMonth(), ts.getDate());
+      const day = (d.getDay()+6)%7;
+      d.setDate(d.getDate()-day+3);
+      const firstThursday = new Date(d.getFullYear(),0,4);
+      const diff = d - firstThursday;
+      const week = 1 + Math.round(diff/ (7*24*3600*1000));
+      return { key: `${d.getFullYear()}-W${String(week).padStart(2,'0')}`, week };
+    }
+    function weekKeyToMonday(weekKeyStr){
+      const m = String(weekKeyStr||'').match(/^(\d{4})-W(\d{2})$/);
+      if(!m) return null;
+      const year = parseInt(m[1],10);
+      const week = parseInt(m[2],10);
+      const jan4 = new Date(year,0,4);
+      const day = (jan4.getDay()+6)%7; // Monday=0
+      const mondayWeek1 = new Date(jan4);
+      mondayWeek1.setDate(jan4.getDate()-day);
+      const monday = new Date(mondayWeek1);
+      monday.setDate(mondayWeek1.getDate() + (week-1)*7);
+      return monday;
+    }
+    function weekLabelTR(weekKeyStr){
+      const monday = weekKeyToMonday(weekKeyStr);
+      return monday ? (formatDateLongTR(monday) + ' haftası') : String(weekKeyStr||'');
+    }
+
+
+    function bucketRange(range){
+      const days=[];
+      if(!range.min||!range.max) return days;
+      const d = new Date(range.min.getFullYear(), range.min.getMonth(), range.min.getDate());
+      const end = new Date(range.max.getFullYear(), range.max.getMonth(), range.max.getDate());
+      while(d<=end){ days.push(new Date(d)); d.setDate(d.getDate()+1);} return days;
+    }
+
+    function tokenize(text){
+      const clean = stripDiacritics(text.toLowerCase());
+      return clean.replace(/[^a-zçğıöşü0-9\s]/gi,' ').split(/\s+/).filter(Boolean).filter(w=>!TURKISH_STOP.has(w));
+    }
+
+    function stripDiacritics(str){
+      const map = {'ç':'c','ğ':'g','ı':'i','ö':'o','ş':'s','ü':'u'};
+      return str.replace(/[çğıöşü]/g,m=>map[m]).replace(/[ÇĞİÖŞÜ]/g,m=>map[m.toLowerCase()]);
+    }
+
+    function normalizeText(str){
+      return stripDiacritics(stripUrls((str||'').toLowerCase()));
+    }
+
+    function extractEmojiTokens(text){
+      const seg = new Intl.Segmenter('tr', { granularity: 'grapheme' });
+      const tokens = [];
+      for(const {segment} of seg.segment(text||'')){
+        if(isEmojiCluster(segment)) tokens.push(segment);
+      }
+      return tokens;
+    }
+
+    function isEmojiCluster(cluster){
+      if(!cluster) return false;
+      const pict = /\p{Extended_Pictographic}/u;
+      return pict.test(cluster) || /\u200d|\ufe0f/.test(cluster);
+    }
+
+    function computeAnalytics(messages, range, stickerIndex){
+      const included = messages.filter(m=>m.kind!=='system'&&m.kind!=='deleted');
+      const textMessages = included.filter(m=>m.kind==='text');
+      const countsBySender = {'Murat Kar':0,'Rümeysa Akbulut':0};
+      const kindsCount = {};
+      const daily = new Map();
+      const monthly = new Map();
+      const hourly = new Array(24).fill(0);
+      const weekDay = new Array(7).fill(0);
+      const longest = {'Murat Kar':[], 'Rümeysa Akbulut':[]};
+      const replyIntervals=[]; const replyIntervalsRaw=[]; const replyDetails=[];
+      const daySet = bucketRange(range);
+      daySet.forEach(d=>daily.set(dayKey(d),0));
+      const callDurations={voice:0,video:0};
+      const callCounts={voice:0,video:0,missedVoice:0,missedVideo:0};
+      const missedBySender={'Murat Kar':0,'Rümeysa Akbulut':0};
+      const mediaCounts={photo:0,video:0,audio:0,sticker:0};
+
+      for(const m of included){
+        countsBySender[m.sender]=(countsBySender[m.sender]||0)+1;
+        kindsCount[m.kind]=(kindsCount[m.kind]||0)+1;
+        const dk = dayKey(m.ts); daily.set(dk,(daily.get(dk)||0)+1);
+        const mk = monthKey(m.ts); monthly.set(mk,(monthly.get(mk)||0)+1);
+        hourly[hourOfDay(m.ts)]++;
+        weekDay[weekday(m.ts)]++;
+        if(m.kind==='text'){
+          const lengthChars = stripUrls(m.rawText).length;
+          const lengthWords = tokenize(m.rawText).length;
+          longest[m.sender].push({text:m.rawText, chars:lengthChars, words:lengthWords, ts:m.ts});
+        }
+        if(m.kind.startsWith('call')){
+          if(m.kind==='call_voice_answered'){ callCounts.voice++; callDurations.voice+=parseDuration(m.rawText); }
+          if(m.kind==='call_video_answered'){ callCounts.video++; callDurations.video+=parseDuration(m.rawText); }
+          if(m.kind==='call_voice_missed'){ callCounts.missedVoice++; missedBySender[m.sender]++; }
+          if(m.kind==='call_video_missed'){ callCounts.missedVideo++; missedBySender[m.sender]++; }
+        }
+        if(mediaCounts[m.kind]!==undefined) mediaCounts[m.kind]++;
+      }
+
+      let lastSender=null; let lastRunStart=null; let lastMsg=null; let lastIdx=null; let idx=0;
+      for(const m of included){
+        if(m.sender!==lastSender){
+          if(lastRunStart){
+            const diff=(m.ts - lastRunStart)/1000;
+            replyIntervalsRaw.push(diff);
+            const capped=Math.min(diff, 12*3600);
+            replyIntervals.push(capped);
+            replyDetails.push({from:lastSender, to:m.sender, start:lastRunStart, end:m.ts, raw:diff, prev:lastMsg?lastMsg.rawText:'' , reply:m.rawText, prevIndex:lastIdx, currIndex:idx});
+          }
+          lastSender=m.sender; lastRunStart=m.ts; lastMsg=m; lastIdx=idx;
+        }
+        idx++;
+      }
+
+      const bothDay = new Set();
+      const perDaySender = new Map();
+      for(const m of included){
+        const k = dayKey(m.ts);
+        const val = perDaySender.get(k)||{M:false,R:false};
+        if(m.sender==='Murat Kar') val.M=true; else val.R=true;
+        perDaySender.set(k,val);
+      }
+      for(const [k,v] of perDaySender.entries()) if(v.M&&v.R) bothDay.add(k);
+      const streaks=[]; let currentStreak=null; for(const d of daySet){ const key=dayKey(d); const active=bothDay.has(key); if(active){ if(!currentStreak) currentStreak={start:new Date(d), end:new Date(d), len:1}; else { currentStreak.len++; currentStreak.end=new Date(d);} } else { if(currentStreak){ streaks.push(currentStreak); currentStreak=null; } } }
+      if(currentStreak) streaks.push(currentStreak);
+      const longestStreak = streaks.sort((a,b)=>b.len-a.len||a.start-b.start)[0]||{len:0};
+      const streakBreaks = streaks.map(s=>({date:new Date(s.end.getFullYear(), s.end.getMonth(), s.end.getDate()+1), len:s.len}));
+
+      for(const k of Object.keys(longest)){
+        longest[k] = longest[k].sort((a,b)=>b.chars-a.chars).slice(0,5);
+      }
+
+      const avgChars = textMessages.length ? Math.round(textMessages.reduce((a,b)=>a+stripUrls(b.rawText).length,0)/textMessages.length) : 0;
+      const avgWords = textMessages.length ? Math.round(textMessages.reduce((a,b)=>a+tokenize(b.rawText).length,0)/textMessages.length) : 0;
+
+      const hist = bucketReply(replyIntervals);
+      const meanReply = replyIntervals.length? replyIntervals.reduce((a,b)=>a+b,0)/replyIntervals.length : 0;
+      const medianReply = replyIntervals.length? (replyIntervals.slice().sort((a,b)=>a-b)[Math.floor(replyIntervals.length/2)]) : 0;
+
+      const outliers = replyDetails.sort((a,b)=>b.raw-a.raw).slice(0,10);
+
+      const dayEntries = Array.from(daily.entries()).map(([k,v])=>({key:k,count:v}));
+      const busiest = dayEntries.slice().sort((a,b)=>b.count-a.count||a.key.localeCompare(b.key)).slice(0,10);
+      const calmest = dayEntries.slice().sort((a,b)=>a.count-b.count||a.key.localeCompare(b.key)).slice(0,10);
+
+      const stickerGroups = computeStickers(included, stickerIndex);
+
+      const wordFreq = new Map();
+      for(const m of textMessages){
+        if(/görüntü dahil edildi|görüntü dahil edilmedi|video dahil edildi|ses dahil edildi|\<media omitted\>/i.test(m.rawText||'')) continue;
+        const tokens = tokenize(stripUrls(m.rawText));
+        tokens.forEach(t=>{ const norm=stripDiacritics(t); wordFreq.set(norm,(wordFreq.get(norm)||{count:0,forms:new Map()})); const entry=wordFreq.get(norm); entry.count++; const form= t; entry.forms.set(form,(entry.forms.get(form)||0)+1); });
+      }
+      const wordCloud = Array.from(wordFreq.entries()).map(([norm,obj])=>{ const bestForm = Array.from(obj.forms.entries()).sort((a,b)=>b[1]-a[1]||b[0].length-a[0].length)[0]?.[0]||norm; return {word:bestForm,count:obj.count}; }).sort((a,b)=>b.count-a.count).slice(0,240);
+
+      const emojiFreq = new Map();
+      for(const m of textMessages){
+        const matches = extractEmojiTokens(m.rawText);
+        matches.forEach(e=>emojiFreq.set(e,(emojiFreq.get(e)||0)+1));
+      }
+      const emojiTop = Array.from(emojiFreq.entries()).sort((a,b)=>b[1]-a[1]).slice(0,10);
+      const emojiDebug=[];
+      for(const m of textMessages){
+        const tokens = extractEmojiTokens(m.rawText);
+        for(const t of tokens){ if(emojiDebug.length<20) emojiDebug.push(t); }
+        if(emojiDebug.length>=20) break;
+      }
+
+      const topicCounts={};
+      const topicSamples={};
+      for(const [cat,kw] of Object.entries(TOPIC_CATS)){ topicCounts[cat]=0; topicSamples[cat]={m:null,r:null}; }
+      for(const m of textMessages){
+        const norm = normalizeText(m.rawText);
+        const tokenSet = new Set(tokenize(norm));
+        for(const [cat,kw] of Object.entries(TOPIC_CATS)){
+          const hit = kw.some(k=>{
+            const kk = normalizeText(k);
+            if(kk.includes(' ')) return norm.includes(kk);
+            return tokenSet.has(kk);
+          });
+          if(hit){
+            topicCounts[cat]++;
+            if(m.sender==='Murat Kar' && !topicSamples[cat].m) topicSamples[cat].m=m;
+            if(m.sender==='Rümeysa Akbulut' && !topicSamples[cat].r) topicSamples[cat].r=m;
+          }
+        }
+      }
+
+      const ngramCounts = new Map();
+      const ngramExamples = new Map();
+      for(const m of textMessages){
+        const tokens = tokenize(stripUrls(m.rawText));
+        for(let n=2;n<=3;n++){
+          for(let i=0;i<=tokens.length-n;i++){
+            const slice=tokens.slice(i,i+n);
+            const hasMeaning = slice.some(t=>t.length>=4 && !TURKISH_STOP.has(stripDiacritics(t)));
+            if(!hasMeaning) continue;
+            const key=slice.join(' ');
+            ngramCounts.set(key,(ngramCounts.get(key)||0)+1);
+            if(!ngramExamples.has(key)) ngramExamples.set(key, m);
+          }
+        }
+      }
+      const topNgramsRaw = Array.from(ngramCounts.entries()).filter(([,c])=>c>=40).sort((a,b)=>b[1]-a[1]).slice(0,12);
+      const topNgrams = topNgramsRaw.length>=6 ? topNgramsRaw.map(([k,v])=>({key:k,count:v,example:ngramExamples.get(k)})) : [];
+
+      const laughRanking=[];
+      let lastBurst={M:null,R:null};
+      for(const m of textMessages){
+        if(!looksLikeLaugh(m.rawText)) continue;
+        const senderKey = m.sender==='Murat Kar'?'M':'R';
+        const last = lastBurst[senderKey];
+        if(last && (m.ts - last.ts) <= 120000){
+          last.messages.push(m);
+          continue;
+        }
+        const prev = included.findLast(x=>x.ts<m.ts && x.sender!==m.sender && x.kind==='text');
+        if(prev){
+          const score = scoreLaughBurst(m.rawText);
+          const entry = laughRanking.find(x=>x.msg===prev);
+          if(entry){ entry.count += score; entry.laughs.push(m.rawText); }
+          else laughRanking.push({msg:prev,count:score,laughs:[m.rawText],ts:m.ts});
+          lastBurst[senderKey] = {ts:m.ts, messages:[m]};
+        }
+      }
+      laughRanking.sort((a,b)=>b.count-a.count).splice(20);
+
+      const romanceMessages = textMessages.filter(m=>ROMANTIC.some(r=>m.rawText.toLowerCase().includes(r)) || /❤️|💜|💕|💖|💘/.test(m.rawText)).sort((a,b)=>b.rawText.length-a.rawText.length).slice(0,10);
+
+      const dateMentions=[]; const dateCats=new Map(); const dateWeek=new Map();
+      for(const m of textMessages){
+        const norm = stripDiacritics(m.rawText.toLowerCase());
+        if(DATEI_TOKENS.some(t=>norm.includes(t))){
+          dateMentions.push(m);
+          const parts = tokenize(norm);
+          const idx = parts.findIndex(p=>DATEI_TOKENS.includes(p));
+          const cat = idx>0?parts[idx-1]:'genel';
+          dateCats.set(cat,(dateCats.get(cat)||0)+1);
+          const wk = weekKey(m.ts); dateWeek.set(wk.key,(dateWeek.get(wk.key)||0)+1);
+        }
+      }
+
+      const overlay = buildOverlay(daily, laughRanking, romanceMessages, dateWeek);
+
+      return {countsBySender,kindsCount,daily,monthly,hourly,weekDay,longest,replyIntervals,replyIntervalsRaw,replyDetails,hist,meanReply,medianReply,outliers,busiest,calmest,mediaCounts,callCounts,callDurations,missedBySender,stickerGroups,wordCloud,emojiTop,emojiDebug,topicCounts,topicSamples,topNgrams,laughRanking,romanceMessages,dateMentions,dateCats,dateWeek:fillWeek(dateWeek),weeklyOverlay:overlay,longestStreak,streaks,streakBreaks,avgChars,avgWords,range};
+    }
+
+    function fillWeek(map){
+      const arr = Array.from(map.entries()).sort((a,b)=>a[0].localeCompare(b[0]));
+      return new Map(arr);
+    }
+
+    function parseDuration(text){
+      const m = text.match(/(\d+) saat/) || [];
+      const h = Number(m[1]||0);
+      const m2 = text.match(/(\d+) dk/) || [];
+      const min = Number(m2[1]||0);
+      const s = text.match(/(\d+) sn/) || [];
+      const sec = Number(s[1]||0);
+      return h*3600 + min*60 + sec;
+    }
+
+    function bucketReply(list){
+      const buckets=[0,0,0,0,0,0,0,0];
+      list.forEach(sec=>{
+        if(sec<=30) buckets[0]++; else if(sec<=60) buckets[1]++; else if(sec<=300) buckets[2]++; else if(sec<=900) buckets[3]++; else if(sec<=3600) buckets[4]++; else if(sec<=10800) buckets[5]++; else if(sec<=36000) buckets[6]++; else buckets[7]++;
+      });
+      return buckets;
+    }
+
+    async function buildStickerIndex(files){
+      const stickers = files.filter(f=>/STICKER-.*\.webp$/i.test(f.name));
+      const res=[];
+      for(const f of stickers){
+        const buf = await f.arrayBuffer();
+        const hash = await crypto.subtle.digest('SHA-256', buf);
+        const view = new Uint8Array(hash).slice(0,4);
+        const hex = Array.from(view).map(x=>x.toString(16).padStart(2,'0')).join('');
+        res.push({name:f.name, size:f.size, hash:hex});
+      }
+      return res;
+    }
+
+    function computeStickers(messages, index){
+      const groups=new Map();
+      for(const m of messages){
+        if(m.kind!=='sticker') continue;
+        const match = m.rawText.match(/<([^>]*-STICKER-[^>]*)>/);
+        const file = match?match[1]:'';
+        const meta = index.find(i=>file.includes(i.name));
+        const key = meta? `${meta.size} bayt${meta.hash?` • ${meta.hash}`:''}` : 'Sticker';
+        const arr = groups.get(key)||{key,label:'',count:0,samples:[]};
+        arr.count++; if(arr.samples.length<3) arr.samples.push(m);
+        groups.set(key,arr);
+      }
+      return Array.from(groups.values()).sort((a,b)=>b.count-a.count);
+    }
+
+    function enrichStickerLabels(groups){
+      return (groups||[]).map(g=>{
+        const stored = STORAGE.getItem('label_'+g.key);
+        const label = stored!==null ? stored : (g.label||'');
+        return {...g, label};
+      });
+    }
+
+    function buildOverlay(daily, laughs, romance, dateWeek){
+      const byWeek = new Map();
+      for(const [k,v] of daily.entries()){
+        const dParts = k.split('-');
+        const ts = new Date(Number(dParts[0]), Number(dParts[1])-1, Number(dParts[2]));
+        const wk = weekKey(ts).key;
+        byWeek.set(wk,(byWeek.get(wk)||{msg:0,laugh:0,rom:0,datei:0}));
+        byWeek.get(wk).msg += v;
+      }
+      laughs.forEach(l=>{ const wk = weekKey(l.msg.ts).key; byWeek.set(wk,(byWeek.get(wk)||{msg:0,laugh:0,rom:0,datei:0})); byWeek.get(wk).laugh += l.count; });
+      romance.forEach(r=>{ const wk = weekKey(r.ts).key; byWeek.set(wk,(byWeek.get(wk)||{msg:0,laugh:0,rom:0,datei:0})); byWeek.get(wk).rom += 1; });
+      dateWeek.forEach((v,k)=>{ byWeek.set(k,(byWeek.get(k)||{msg:0,laugh:0,rom:0,datei:0})); byWeek.get(k).datei += v; });
+      const arr = Array.from(byWeek.entries()).map(([k,v])=>({key:k,...v})).sort((a,b)=>a.key.localeCompare(b.key));
+      const normField = f=>{ const max = Math.max(...arr.map(a=>a[f]||0),1); arr.forEach(a=>{ a[f+'Norm']= Math.round((a[f]||0)/max*100); }); };
+      ['msg','laugh','rom','datei'].forEach(normField);
+      return arr;
+    }
+
+    
+    const TR_MONTHS = ['Ocak','Şubat','Mart','Nisan','Mayıs','Haziran','Temmuz','Ağustos','Eylül','Ekim','Kasım','Aralık'];
+    const TR_WEEKDAYS = ['Pazartesi','Salı','Çarşamba','Perşembe','Cuma','Cumartesi','Pazar'];
+
+    function formatDateLongTR(ts, withWeekday=true){
+      if(!(ts instanceof Date)) ts = new Date(ts);
+      const d = ts.getDate();
+      const m = TR_MONTHS[ts.getMonth()];
+      const y = ts.getFullYear();
+      const wd = TR_WEEKDAYS[(ts.getDay()+6)%7];
+      return withWeekday ? `${d} ${m} ${y} ${wd}` : `${d} ${m} ${y}`;
+    }
+
+    function formatDateShortTR(ts){
+      if(!(ts instanceof Date)) ts = new Date(ts);
+      return `${ts.getDate()} ${TR_MONTHS[ts.getMonth()]} ${ts.getFullYear()}`;
+    }
+
+    function formatDateRangeTR(a,b){
+      return `${formatDateShortTR(a)} — ${formatDateShortTR(b)}`;
+    }
+
+    function formatDuration(sec){
+      const h=Math.floor(sec/3600); const m=Math.floor((sec%3600)/60); const s=Math.floor(sec%60);
+      if(h>0) return `${h} saat ${m} dk`;
+      if(m>0) return `${m} dk ${s} sn`;
+      return `${s} sn`;
+    }
+
+    function formatRatio(part, total){
+      const t = Number(total)||0;
+      if(!t) return '0% (0)';
+      const p = Number(part)||0;
+      return `${Math.round(p/t*100)}% (${p})`;
+    }
+
+    function truncate(str, len){
+      if(!str) return '';
+      return str.length>len ? str.slice(0,len-1)+'…' : str;
+    }
+
+    
+function renderAll(parsed, agg){
+      contentEl.innerHTML='';
+      navEl.innerHTML='';
+
+      const minTs = parsed.range.min;
+      const maxTs = parsed.range.max;
+      const rangeText = (minTs && maxTs) ? formatDateRangeTR(minTs, maxTs) : 'Tarih yok';
+      const daysCount = (minTs && maxTs) ? (Math.floor((new Date(maxTs.getFullYear(),maxTs.getMonth(),maxTs.getDate()) - new Date(minTs.getFullYear(),minTs.getMonth(),minTs.getDate()))/(24*3600*1000)) + 1) : 0;
+
+      const pages=[];
+
+      // PAGE 1 — Cover (full-page, centered)
+      pages.push({id:'page-1',html:`
+        <section class="page cover" id="page-1">
+          <div class="cover-inner">
+            <div class="cover-kicker serif">253 GÜNLÜK HİKAYENİN VERİ YORUMLAMASI</div>
+            <div class="cover-rule"></div>
+            <h1 class="cover-title serif">MURAT&amp;RÜM<small class="serif">2025 RAPORU</small></h1>
+            <p class="cover-body">
+              Bu rapor, 2025 yılı boyunca geçen konuşmalarımızın duygularını, ritmini ve enerjisini veriye dökerek gösteren özel bir yılbaşı hediyesidir.
+              Hem iki mühendisin analitik bakışıyla, hem de birbirlerine duydukları sevginin içtenliğiyle hazırlanmıştır.
+            </p>
+            <div class="cover-footer serif">Istanbul, 2025</div>
+          </div>
+        </section>`});
+
+      // Derived totals
+      const total = (agg.countsBySender['Murat Kar']||0) + (agg.countsBySender['Rümeysa Akbulut']||0);
+      const muratCount = agg.countsBySender['Murat Kar']||0;
+      const rumCount = agg.countsBySender['Rümeysa Akbulut']||0;
+      const murPct = total ? Math.round(muratCount/total*100) : 0;
+      const rumPct = total ? Math.round(rumCount/total*100) : 0;
+
+      // Averages
+      const dayN = Math.max(agg.daily.size, 1);
+      const monthN = Math.max(agg.monthly.size, 1);
+      const weekN = Math.max(agg.weeklyOverlay?.length || 0, 1);
+      const dailyAvg = Math.round(total/dayN);
+      const weeklyAvg = Math.round(total/weekN);
+      const monthlyAvg = Math.round(total/monthN);
+
+      // PAGE 2 — Summary (12 cards, with descriptions)
+      const kpis = [
+        {label:'Toplam mesaj',value:total,desc:'2025 yılı boyunca gönderilen toplam mesaj sayısı.'},
+        {label:'Murat mesaj',value:muratCount,desc:`Gönderilen mesajların %${murPct}’i kadar.`},
+        {label:'Rümeysa mesaj',value:rumCount,desc:`Gönderilen mesajların %${rumPct}’i kadar.`},
+        {label:'Yanıt süresi ort.',value:formatDuration(agg.meanReply),desc:'Konuşma “run” değişimlerine göre ortalama dönüş süresi.'},
+        {label:'Yanıt süresi medyan',value:formatDuration(agg.medianReply),desc:'Uç değerlerden daha az etkilenen tipik dönüş süresi.'},
+        {label:'En uzun streak',value:`${agg.longestStreak.len||0} gün`,desc:(agg.longestStreak.start?`${formatDateShortTR(agg.longestStreak.start)} → ${formatDateShortTR(agg.longestStreak.end)}`:'')},
+        {label:'Görüntülü arama süresi',value:formatDuration(agg.callDurations.video),desc:`${agg.callCounts.video||0} yanıtlanan çağrı`},
+        {label:'Sesli arama süresi',value:formatDuration(agg.callDurations.voice),desc:`${agg.callCounts.voice||0} yanıtlanan çağrı`},
+        {label:'Foto',value:agg.mediaCounts.photo||0,desc:'Paylaşılan fotoğraf adedi.'},
+        {label:'Video',value:agg.mediaCounts.video||0,desc:'Paylaşılan video adedi.'},
+        {label:'Ses',value:agg.mediaCounts.audio||0,desc:'Paylaşılan ses mesajı adedi.'},
+        {label:'Sticker',value:agg.mediaCounts.sticker||0,desc:'Paylaşılan sticker adedi.'},
+      ];
+
+      pages.push({id:'page-2',html:`
+        <section class="page" id="page-2">
+          <div class="page-header"><div><div class="pill">Sayfa 2</div><h2 class="page-title">Özet Pano</h2><p class="page-sub">Yılın ana rakamları</p></div></div>
+          <div class="grid">
+            ${kpis.map(k=>`
+              <div class="card" style="grid-column: span 3;">
+                <h3>${k.label}</h3>
+                <div class="kpi">${k.value}</div>
+                <div class="muted">${k.desc}</div>
+              </div>
+            `).join('')}
+          </div>
+        </section>`});
+
+      // PAGE 3 — Tempo
+      const busiest = agg.busiest[0];
+      const busiestText = busiest ? `${formatDateLongTR(new Date(busiest.key+'T00:00:00'), true)} — ${busiest.count} mesaj` : '-';
+      pages.push({id:'page-3',html:`
+        <section class="page" id="page-3">
+          <div class="page-header"><div><div class="pill">Sayfa 3</div><h2 class="page-title">Tempo</h2><p class="page-sub">Günlük mesaj trafiği</p></div></div>
+          <div class="chart-box avoid-break"><canvas data-type="line"></canvas></div>
+          <ul class="list" style="margin-top:12px;">
+            <li><strong>En yoğun gün:</strong> ${busiestText}</li>
+            <li><strong>Günlük ortalama:</strong> ${dailyAvg} mesaj</li>
+            <li><strong>Haftalık ortalama:</strong> ${weeklyAvg} mesaj</li>
+            <li><strong>Aylık ortalama:</strong> ${monthlyAvg} mesaj</li>
+          </ul>
+        </section>`});
+
+      // PAGE 4 — Months
+      const monthNames = (ym)=>{ const [y,m]=ym.split('-'); return `${TR_MONTHS[Number(m)-1]}`; };
+      const topMonths = Array.from(agg.monthly.entries()).sort((a,b)=>b[1]-a[1]).slice(0,3);
+      pages.push({id:'page-4',html:`
+        <section class="page" id="page-4">
+          <div class="page-header"><div><div class="pill">Sayfa 4</div><h2 class="page-title">Aylara Göre</h2><p class="page-sub">12 aylık ritim</p></div></div>
+          <div class="chart-box avoid-break"><canvas data-type="month"></canvas></div>
+          <div class="two-col" style="margin-top:12px;">
+            <div class="card"><h3>En yoğun aylar</h3><ul class="list">${topMonths.map(m=>`<li>${monthNames(m[0])} — ${m[1]}</li>`).join('')}</ul></div>
+            <div class="card"><h3>Yıllık toplam</h3><div class="kpi">${total}</div><div class="muted">mesaj</div></div>
+          </div>
+        </section>`});
+
+      // PAGE 5 — Hours
+      const peakHour = agg.hourly.indexOf(Math.max(...agg.hourly));
+      const lowHour = agg.hourly.indexOf(Math.min(...agg.hourly));
+      pages.push({id:'page-5',html:`
+        <section class="page" id="page-5">
+          <div class="page-header"><div><div class="pill">Sayfa 5</div><h2 class="page-title">Saatler</h2><p class="page-sub">Günün hangi saatlerinde?</p></div></div>
+          <div class="chart-box avoid-break"><canvas data-type="hours"></canvas></div>
+          <div class="two-col" style="margin-top:12px;">
+            <div class="card"><h3>Zirve saat</h3><div class="kpi">${String(peakHour).padStart(2,'0')}:00</div><div class="muted">En yoğun dilim</div></div>
+            <div class="card"><h3>En sakin saat</h3><div class="kpi">${String(lowHour).padStart(2,'0')}:00</div><div class="muted">Neredeyse sessizlik</div></div>
+          </div>
+        </section>`});
+
+      // PAGE 6 — Weekdays
+      const weekNames=['Pzt','Sal','Çar','Per','Cum','Cts','Paz'];
+      const peakDayIdx = agg.weekDay.indexOf(Math.max(...agg.weekDay));
+      const calmDayIdx = agg.weekDay.indexOf(Math.min(...agg.weekDay));
+      pages.push({id:'page-6',html:`
+        <section class="page" id="page-6">
+          <div class="page-header"><div><div class="pill">Sayfa 6</div><h2 class="page-title">Günler</h2><p class="page-sub">Haftanın ritmi</p></div></div>
+          <div class="chart-box avoid-break"><canvas data-type="week"></canvas></div>
+          <div class="two-col" style="margin-top:12px;">
+            <div class="card"><h3>En hareketli gün</h3><div class="kpi">${weekNames[peakDayIdx]}</div><div class="muted">Haftanın yıldızı</div></div>
+            <div class="card"><h3>En sakin gün</h3><div class="kpi">${weekNames[calmDayIdx]}</div><div class="muted">Dinlenme modu</div></div>
+          </div>
+        </section>`});
+
+      // PAGE 7 — Reply time + Top 5 longest waits (compact print-safe context)
+      const included = (parsed.messages||[]).filter(m=>m.kind!=='system'&&m.kind!=='deleted');
+      const outliers = (agg.outliers||[]).slice(0,5).map(o=>{
+        const prevIdx = o.prevIndex ?? -1;
+        const currIdx = o.currIndex ?? -1;
+        const start = Math.max(prevIdx,0);
+        const end = Math.min(Math.max(currIdx,start), start+5, included.length-1);
+        const context = included.slice(start, end+1).map(m=>({sender:m.sender, text:m.rawText, ts:m.ts}));
+        return {...o, context};
+      });
+
+      const waitRow = (m)=>`
+        <div class="wait-row">
+          <div class="wait-sender">${escapeHtml(m.sender)}</div>
+          <div class="wait-time">${formatDateShortTR(new Date(m.ts))} ${formatTimeHHMM(new Date(m.ts))}</div>
+          <div class="wait-text">${truncate(escapeHtml(m.text||''), 180)}</div>
+        </div>`;
+
+      pages.push({id:'page-7',html:`
+        <section class="page" id="page-7">
+          <div class="page-header"><div><div class="pill">Sayfa 7</div><h2 class="page-title">Yanıt Süresi</h2><p class="page-sub">12 saat tavanlı dağılım + en uzun bekleyişler</p></div></div>
+
+          <div class="card">
+            <div class="chart-wrap"><canvas id="replyChart" data-type="hist"></canvas></div>
+            <div class="two-col" style="margin-top:12px;">
+              <div>
+                <div class="muted">Ortalama</div>
+                <div class="kpi">${formatDuration(agg.meanReply||0)}</div>
+                <div class="muted">Tüm konuşmaların ortalaması (uç değerlerden etkilenir).</div>
+              </div>
+              <div>
+                <div class="muted">Medyan</div>
+                <div class="kpi">${formatDuration(agg.medianReply||0)}</div>
+                <div class="muted">Dönüşlerin tam ortası (daha “tipik” bir değer).</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="card avoid-break" style="margin-top:12px;">
+            <h3>Top 5 en uzun bekleyiş — mini sohbet bağlamı</h3>
+            <div class="muted">Baskıda sığması için her bekleyişte en fazla 6 mesaj gösterilir.</div>
+
+            ${outliers.map((o,i)=>`
+              <div class="wait-block">
+                <div class="wait-head">
+                  <div class="wait-title">${i+1}. Bekleyiş</div>
+                  <div class="muted">${formatDateShortTR(new Date(o.start))} ${formatTimeHHMM(new Date(o.start))} → ${formatDateShortTR(new Date(o.end))} ${formatTimeHHMM(new Date(o.end))} • <strong>${formatDuration(o.raw)}</strong></div>
+                </div>
+                <div class="wait-msgs">${(o.context||[]).map(waitRow).join('')}</div>
+              </div>
+            `).join('')}
+          </div>
+        </section>`});
+
+      // PAGE 8 — Streaks (simplified)
+      const streakTop = (agg.streaks||[]).slice().sort((a,b)=>b.len-a.len||a.start-b.start).slice(0,6);
+      pages.push({id:'page-8',html:`
+        <section class="page" id="page-8">
+          <div class="page-header"><div><div class="pill">Sayfa 8</div><h2 class="page-title">Streakler</h2><p class="page-sub">Konuşmaya ara veremediğimiz dönemler</p></div></div>
+          <div class="card avoid-break" style="margin-bottom:12px;">
+            <h3>En uzun streak</h3>
+            <div class="kpi">${agg.longestStreak.len||0} gün</div>
+            <div class="muted">${agg.longestStreak.start?`${formatDateShortTR(agg.longestStreak.start)} → ${formatDateShortTR(agg.longestStreak.end)}`:''}</div>
+          </div>
+          <div class="card">
+            <h3>Top streakler</h3>
+            <ul class="list">${streakTop.map(s=>`<li>${formatDateShortTR(s.start)} → ${formatDateShortTR(s.end)} (${s.len} gün)</li>`).join('')}</ul>
+          </div>
+        </section>`});
+
+      // PAGE 9 — Busy/Calm days (formatted dates)
+      const fmtDay = (k)=> formatDateLongTR(new Date(k+'T00:00:00'), true);
+      pages.push({id:'page-9',html:`
+        <section class="page" id="page-9">
+          <div class="page-header"><div><div class="pill">Sayfa 9</div><h2 class="page-title">En Yoğun / En Sakin Günler</h2><p class="page-sub">Göz açıp kapayınca</p></div></div>
+          <div class="two-col">
+            <div class="card"><h3>En yoğun 7 gün</h3><ul class="list">${agg.busiest.slice(0,7).map(d=>`<li>${fmtDay(d.key)} — ${d.count} mesaj</li>`).join('')}</ul></div>
+            <div class="card"><h3>En sakin 7 gün</h3><ul class="list">${agg.calmest.slice(0,7).map(d=>`<li>${fmtDay(d.key)} — ${d.count} mesaj</li>`).join('')}</ul></div>
+          </div>
+        </section>`});
+
+      // PAGE 10 — Word cloud (remove meaningless hint, add analysis)
+      const topWords = (agg.wordCloud||[]).slice(0,12);
+      const wordInsight = topWords.length ? `En sık geçen kelimeler (özellikle ilk 5) sohbetinizin gündemini ve “ortak dilinizi” gösteriyor. Listeye bakınca yılın ağırlık merkezinin nerede toplandığı çok net: ${topWords.slice(0,5).map(w=>w.word).join(', ')}.` : '';
+      pages.push({id:'page-10',html:`
+        <section class="page" id="page-10">
+          <div class="page-header"><div><div class="pill">Sayfa 10</div><h2 class="page-title">Kelime Bulutu</h2><p class="page-sub">En çok konuşulan kelimeler</p></div></div>
+          <div class="card avoid-break" style="min-height:260px;">
+            <div class="word-cloud-frame">
+              <canvas id="wordCloudCanvas" data-type="wordcloud"></canvas>
+            </div>
+          </div>
+          <div class="two-col" style="margin-top:12px;">
+            <div class="card"><h3>Top kelimeler</h3><ul class="list two-col-list">${topWords.map((w,i)=>`<li>${w.word} — ${w.count}</li>`).join('')}</ul></div>
+            <div class="card"><h3>Mini inceleme</h3><p class="muted">${escapeHtml(wordInsight)}</p></div>
+          </div>
+        </section>`});
+
+      // PAGE 11 — Emojis + Stickers (fill page)
+      const emojiTop = (agg.emojiTop||[]).slice(0,20);
+      const stickerTop = (agg.stickerGroups||[]).slice(0,10);
+      pages.push({id:'page-11',html:`
+        <section class="page" id="page-11">
+          <div class="page-header"><div><div class="pill">Sayfa 11</div><h2 class="page-title">Emojiler</h2><p class="page-sub">En sık kullanılan ilk 20 + sticker özeti</p></div></div>
+
+          <div class="two-col">
+            <div class="card">
+              <h3>En sık kullanılan emojiler</h3>
+              <div class="emoji-list" style="margin-top:10px;">
+                ${emojiTop.map((e)=>`<div class="card emoji-item"><div style="font-size:34px;">${e[0]}</div><div class="muted">${e[1]} kez</div></div>`).join('')}
+              </div>
+            </div>
+
+            <div class="card">
+              <h3>En çok kullanılan stickerlar</h3>
+              <div class="sticker-grid" data-widget="top-stickers" style="margin-top:10px;"></div>
+              <div class="muted" style="margin-top:10px;">Sticker&#39;lar emojiler gibi görünsün diye görselleri /public/stickers altından çekiyoruz.</div>
+            </div>
+          </div>
+        </section>`});
+
+      // PAGE 12 — Topics (improved keyword set already; add warning note)
+      const topicEntries = Object.entries(agg.topicCounts).sort((a,b)=>b[1]-a[1]);
+      pages.push({id:'page-12',html:`
+        <section class="page" id="page-12">
+          <div class="page-header"><div><div class="pill">Sayfa 12</div><h2 class="page-title">Temalar</h2><p class="page-sub">Ana başlıklar (anahtar kelime temelli)</p></div></div>
+          <div class="card" style="margin-bottom:12px;">
+            <div class="muted">Not: Bu bölüm “anahtar kelime” yaklaşımıyla çalışır. İstersen bir sonraki adımda, örnek mesajlar üzerinden daha akıllı bir sınıflandırma kurup doğruluğu artırabiliriz.</div>
+          </div>
+          <div class="grid">
+            ${topicEntries.map(([k,v],i)=>`<div class="card" style="grid-column: span 4;"><h3>${k}</h3><div class="kpi">${v}</div><p class="muted">mesaj</p>
+              <div class="note"><strong>Murat:</strong> ${agg.topicSamples[k].m?truncate(escapeHtml(agg.topicSamples[k].m.rawText),160):'-'}</div>
+              <div class="note"><strong>Rümeysa:</strong> ${agg.topicSamples[k].r?truncate(escapeHtml(agg.topicSamples[k].r.rawText),160):'-'}</div>
+            </div>`).join('')}
+          </div>
+        </section>`});
+
+      // PAGE 13 — Ngrams (explain + already reduced system via classify)
+      if(agg.topNgrams && agg.topNgrams.length){
+        pages.push({id:'page-13',html:`
+          <section class="page" id="page-13">
+            <div class="page-header"><div><div class="pill">Sayfa 13</div><h2 class="page-title">Bu yılın en çok konuşulan 12 kalıbı</h2><p class="page-sub">Büyükram/Trigram: 2–3 kelimelik tekrar eden ifade kümeleri</p></div></div>
+            <div class="card avoid-break">
+              <ul class="list">${agg.topNgrams.map((n)=>`<li><strong>${n.key}</strong> — ${n.count}${n.example?`<div class="muted">${truncate(escapeHtml(n.example.rawText),140)}</div>`:''}</li>`).join('')}</ul>
+            </div>
+          </section>`});
+      }
+
+      // PAGE 14 — Laughter (keep but can be tuned later)
+      const laughTop = agg.laughRanking.slice(0,8);
+      pages.push({id:'page-14',html:`
+        <section class="page" id="page-14">
+          <div class="page-header"><div><div class="pill">Sayfa 14</div><h2 class="page-title">Kahkaha</h2><p class="page-sub">En çok gülme tepkisi alan tetikleyici mesajlar</p></div></div>
+          <div class="card" style="margin-bottom:12px;">
+            <div class="muted">Algoritma: 😂/🤣 ve “haha/ahah/sjsj/kdkd/xdd” gibi tepkileri yakalar; tepkinin hemen öncesindeki karşı mesajı “tetikleyici” kabul eder. İstersen bunu sizin “glitch öncesi mesaj daha komik” kuralınıza göre optimize edebiliriz.</div>
+          </div>
+          <div class="grid">
+            ${laughTop.map((l,i)=>`<div class="card" style="grid-column: span 6;">
+              <h3>${i+1}. ${Math.round(l.count)} puan</h3>
+              <p>${truncate(escapeHtml(l.msg.rawText),220)}</p>
+              <p class="note">${l.laughs.slice(0,2).map(x=>truncate(escapeHtml(x),80)).join('<br>')}</p>
+            </div>`).join('')}
+          </div>
+        </section>`});
+
+      // PAGE 15 — Romance (add sender)
+      const romanceTop = agg.romanceMessages.slice(0,8);
+      pages.push({id:'page-15',html:`
+        <section class="page" id="page-15">
+          <div class="page-header"><div><div class="pill">Sayfa 15</div><h2 class="page-title">Romantizm</h2><p class="page-sub">En tatlı anlar</p></div></div>
+          <div class="grid">
+            ${romanceTop.map((m,i)=>`<div class="card" style="grid-column: span 6;">
+              <h3>${i+1}. An</h3>
+              <div class="muted" style="font-weight:900;margin-bottom:6px;">${escapeHtml(m.sender||'')}</div>
+              <p>${truncate(escapeHtml(m.rawText),260)}</p>
+              <div class="muted">${formatDateShortTR(m.ts)}</div>
+            </div>`).join('')}
+          </div>
+        </section>`});
+
+      // PAGE 16 — Calls & Media (add sticker idea placeholder)
+      pages.push({id:'page-16',html:`
+        <section class="page" id="page-16">
+          <div class="page-header"><div><div class="pill">Sayfa 16</div><h2 class="page-title">Çağrılar & Medya</h2><p class="page-sub">Detaylar</p></div></div>
+          <div class="grid">
+            ${[['Fotoğraf',agg.mediaCounts.photo],['Video',agg.mediaCounts.video],['Ses',agg.mediaCounts.audio],['Sticker',agg.mediaCounts.sticker]].map(k=>`<div class="card" style="grid-column: span 3;">
+              <div class="muted">${k[0]}</div><div class="kpi">${k[1]||0}</div>
+            </div>`).join('')}
+          </div>
+          <div class="grid" style="margin-top:12px;">
+            <div class="card" style="grid-column: span 6;">
+              <h3>Sesli aramalar</h3>
+              <div class="kpi">${agg.callCounts.voice||0} yanıtlanan</div>
+              <div class="muted">Toplam süre: ${formatDuration(agg.callDurations.voice)}</div>
+              <div class="muted">Cevapsız: ${agg.callCounts.missedVoice||0}</div>
+            </div>
+            <div class="card" style="grid-column: span 6;">
+              <h3>Görüntülü aramalar</h3>
+              <div class="kpi">${agg.callCounts.video||0} yanıtlanan</div>
+              <div class="muted">Toplam süre: ${formatDuration(agg.callDurations.video)}</div>
+              <div class="muted">Cevapsız: ${agg.callCounts.missedVideo||0}</div>
+            </div>
+          </div>
+          <div class="card" style="margin-top:12px;">
+            <h3>Stickerlar</h3>
+            <div class="muted">Sticker özeti bu sayfada değil, Emojiler sayfasında listeleniyor. Görseller için medya klasörü ile hash eşleştirmesi gerekir.</div>
+          </div>
+        </section>`});
+
+      // PAGE 17 — Date’i (remove unrelated weekly chart, focus on examples + categories)
+      const dateCatsSorted = Array.from(agg.dateCats.entries()).sort((a,b)=>b[1]-a[1]).slice(0,10);
+      const dateExamplesByCat = new Map();
+      for(const m of (agg.dateMentions||[])) if(!dateExamplesByCat.has(m.cat)) dateExamplesByCat.set(m.cat,m);
+      const dateExamples = dateCatsSorted.map(c=>dateExamplesByCat.get(c[0])).filter(Boolean).slice(0,10);
+      pages.push({id:'page-17',html:`
+        <section class="page" id="page-17">
+          <div class="page-header"><div><div class="pill">Sayfa 17</div><h2 class="page-title">Date’i</h2><p class="page-sub">Konuştuğumuz “date”ler</p></div></div>
+          <div class="two-col">
+            <div class="card">
+              <h3>Toplam geçiş</h3>
+              <div class="kpi">${(agg.dateMentions||[]).length}</div>
+              <div class="muted">“date / date’i / datei” türevleri</div>
+              <h4 style="margin-top:10px;">İlk 10 kategori</h4>
+              <ul class="list">${dateCatsSorted.map(c=>`<li>${escapeHtml(c[0])} — ${c[1]}</li>`).join('')}</ul>
+            </div>
+            <div class="card">
+              <h3>Örnek geçişler</h3>
+              <ul class="list">${dateExamples.map(m=>`<li><strong>${escapeHtml(m.sender)}</strong> • ${formatDateShortTR(m.ts)}<br>${truncate(escapeHtml(m.rawText),140)}</li>`).join('')}</ul>
+              <div class="muted" style="margin-top:10px;">Not: “çalışma date’i” gibi kalıpları kaçırıyorsa, tokenizasyon/normalizasyonu biraz daha sertleştirip yakalama oranını artırırız.</div>
+            </div>
+          </div>
+        </section>`});
+
+      // PAGE 18 — Replace meaningless overlay with “Highlight weeks”
+      const weeks = (agg.weeklyOverlay||[]);
+      const topMsgWeeks = weeks.slice().sort((a,b)=>b.msg-a.msg).slice(0,5);
+      const topLaughWeeks = weeks.slice().sort((a,b)=>b.laugh-a.laugh).slice(0,5);
+      const topRomWeeks = weeks.slice().sort((a,b)=>b.rom-a.rom).slice(0,5);
+      const topDateWeeks = weeks.slice().sort((a,b)=>b.datei-a.datei).slice(0,5);
+      const wkLabel = (k)=> weekLabelTR(k);
+      pages.push({id:'page-18',html:`
+        <section class="page" id="page-18">
+          <div class="page-header"><div><div class="pill">Sayfa 18</div><h2 class="page-title">Yılın Öne Çıkan Haftaları</h2><p class="page-sub">Karışık overlay yerine net listeler</p><div class="muted" style="margin-top:6px;">Seçimler: En yoğun hafta = mesaj sayısı, en kahkahalı = “😂/🤣” tepkisi puanı, en romantik = romantik mesaj sayısı, Date’i yoğunluğu = “date” geçiş sayısı.</div></div></div>
+          <div class="grid">
+            <div class="card" style="grid-column: span 6;">
+              <h3>En yoğun haftalar</h3>
+              <ul class="list">${topMsgWeeks.map(w=>`<li>${wkLabel(w.key)} — ${w.msg} mesaj</li>`).join('')}</ul>
+            </div>
+            <div class="card" style="grid-column: span 6;">
+              <h3>En kahkahalı haftalar</h3>
+              <ul class="list">${topLaughWeeks.map(w=>`<li>${wkLabel(w.key)} — ${Math.round(w.laugh)} puan</li>`).join('')}</ul>
+            </div>
+            <div class="card" style="grid-column: span 6;">
+              <h3>En romantik haftalar</h3>
+              <ul class="list">${topRomWeeks.map(w=>`<li>${wkLabel(w.key)} — ${w.rom} an</li>`).join('')}</ul>
+            </div>
+            <div class="card" style="grid-column: span 6;">
+              <h3>Date’i yoğunluğu</h3>
+              <ul class="list">${topDateWeeks.map(w=>`<li>${wkLabel(w.key)} — ${w.datei} geçiş</li>`).join('')}</ul>
+            </div>
+          </div>
+        </section>`});
+
+      // PAGE 19 — Closing
+      const savedClosing = localStorageSafeGet('closing_note')||'Bu yılı nasıl kapatmak istersin? Buraya son sözünü yaz.';
+      pages.push({id:'page-19',html:`
+        <section class="page" id="page-19">
+          <div class="page-header"><div><div class="pill">Sayfa 19</div><h2 class="page-title">Son Söz</h2><p class="page-sub">Ekranda düzenle, baskıda sabit</p></div></div>
+          <textarea class="closing-input no-print" id="closingInput">${escapeHtml(savedClosing)}</textarea>
+          <div class="card" style="margin-top:12px;"><h3>Yazdırılacak metin</h3><p id="closingPreview">${escapeHtml(savedClosing)}</p></div>
+        </section>`});
+
+      // PAGE 20 — Back
+      pages.push({id:'page-20',html:`
+        <section class="page" id="page-20" style="display:flex;align-items:center;justify-content:center;flex-direction:column;text-align:center;">
+          <div class="pill">Sayfa 20</div>
+          <h2 class="page-title">Arşive hazır</h2>
+          <p class="muted">Yerelde üretildi. PDF olarak saklayın.</p>
+        </section>`});
+
+      
+      // PAGE 21 — ALO (GSM calls)
+      pages.push({id:'page-21',html:`
+        <section class="page" id="page-21">
+          <div class="page-header">
+            <div class="pill">Sayfa 21</div>
+            <div class="page-title">ALO</div>
+            <div class="page-subtitle">GSM konuşmaları (Turkcell dökümü)</div>
+          </div>
+
+          <div class="kpi-grid">
+            <div class="kpi">
+              <div class="kpi-label">Toplam görüşme</div>
+              <div class="kpi-value" id="gsm_totalCalls">—</div>
+              <div class="kpi-desc">Bu yıl kaç kez “alo” dedik.</div>
+            </div>
+            <div class="kpi">
+              <div class="kpi-label">Toplam süre</div>
+              <div class="kpi-value" id="gsm_totalHours">—</div>
+              <div class="kpi-desc">Saat bazında.</div>
+            </div>
+            <div class="kpi">
+              <div class="kpi-label">Ortalama</div>
+              <div class="kpi-value" id="gsm_avg">—</div>
+              <div class="kpi-desc">Görüşme başına.</div>
+            </div>
+            <div class="kpi">
+              <div class="kpi-label">Maksimum tek görüşme</div>
+              <div class="kpi-value" id="gsm_max">—</div>
+              <div class="kpi-desc">“Kapatmamışız.”</div>
+            </div>
+          </div>
+
+          <div class="split two">
+            <div class="card">
+              <div class="card-title">Aylara göre konuşma (dk)</div>
+              <div class="barlist" id="gsm_monthBars"></div>
+            </div>
+
+            <div class="card">
+              <div class="card-title">Saatlere göre konuşma (dk)</div>
+              <div class="barlist" id="gsm_hourBars"></div>
+            </div>
+          </div>
+
+          <div class="split two">
+            <div class="card">
+              <div class="card-title">En yoğun gün</div>
+              <div class="big-insight" id="gsm_mostDay">—</div>
+              <div class="muted" id="gsm_mostDayDesc">—</div>
+            </div>
+
+            <div class="card">
+              <div class="card-title">En uzun 5 görüşme</div>
+              <ol class="toplist" id="gsm_top5"></ol>
+            </div>
+          </div>
+
+          <div class="card closing-card">
+            <div class="card-title">Tek cümlelik “Wrapped” cümleleri</div>
+            <div class="insight-inputs">
+              <input class="insight-input" data-key="gsm_insight_1" placeholder="Örn: 73 saat = mini bir hayat."/>
+              <input class="insight-input" data-key="gsm_insight_2" placeholder="Örn: Ortalama 18 dk = kısa arama değil, sohbet."/>
+              <input class="insight-input" data-key="gsm_insight_3" placeholder="Örn: 2 saat = o gün dünya kapandı."/>
+            </div>
+            <div class="muted">Bu 3 satırı sonra birlikte “daha detay metin” olarak parlatırız.</div>
+          </div>
+        </section>
+      `});
+
+      latestPages = pages;
+      renderPagesGradually(pages, agg);
+    }
+
+    function renderAllPagesSync(pages, agg){
+      contentEl.innerHTML='';
+      navEl.innerHTML='';
+      pages.forEach(p=>renderSinglePage(p, agg));
+
+      document.querySelectorAll('.page').forEach(ensureWrappedBG);
+    }
+
+    function renderPagesGradually(pages, agg){
+      contentEl.innerHTML='';
+      navEl.innerHTML='';
+      const queue = [...pages];
+      const first = queue.splice(0,2);
+      first.forEach(p=>renderSinglePage(p, agg));
+      const schedule = window.requestIdleCallback || window.requestAnimationFrame;
+      const pump = ()=>{
+        const next = queue.shift();
+        if(!next) return;
+        renderSinglePage(next, agg);
+        if(queue.length) schedule(pump);
+      };
+      schedule(pump);
+    }
+
+    function ensureWrappedBG(section){
+      if(!section) return;
+      // cover already has its own strong background; keep it intact
+      if(section.classList && section.classList.contains('cover')) return;
+      if(section.querySelector('.page-bg')) return;
+
+      const bg = document.createElement('div');
+      bg.className = 'page-bg';
+      bg.setAttribute('aria-hidden','true');
+      bg.innerHTML = `<svg viewBox="0 0 1000 1400" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <radialGradient id="rg1" cx="20%" cy="25%" r="75%">
+      <stop offset="0%" stop-color="#7C4DFF" stop-opacity="0.55"/>
+      <stop offset="55%" stop-color="#00D2FF" stop-opacity="0.18"/>
+      <stop offset="100%" stop-color="#FFFFFF" stop-opacity="0"/>
+    </radialGradient>
+    <radialGradient id="rg2" cx="78%" cy="32%" r="70%">
+      <stop offset="0%" stop-color="#FF2BD6" stop-opacity="0.48"/>
+      <stop offset="60%" stop-color="#FF7A00" stop-opacity="0.16"/>
+      <stop offset="100%" stop-color="#FFFFFF" stop-opacity="0"/>
+    </radialGradient>
+    <radialGradient id="rg3" cx="55%" cy="88%" r="80%">
+      <stop offset="0%" stop-color="#00FFA3" stop-opacity="0.40"/>
+      <stop offset="60%" stop-color="#00D2FF" stop-opacity="0.14"/>
+      <stop offset="100%" stop-color="#FFFFFF" stop-opacity="0"/>
+    </radialGradient>
+    <linearGradient id="lg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#00D2FF" stop-opacity="0.18"/>
+      <stop offset="55%" stop-color="#7C4DFF" stop-opacity="0.12"/>
+      <stop offset="100%" stop-color="#FF2BD6" stop-opacity="0.14"/>
+    </linearGradient>
+  </defs>
+
+  <!-- soft base wash -->
+  <rect x="0" y="0" width="1000" height="1400" fill="url(#lg)"/>
+
+  <!-- wrapped blobs -->
+  <circle cx="220" cy="320" r="520" fill="url(#rg1)"/>
+  <circle cx="820" cy="420" r="520" fill="url(#rg2)"/>
+  <circle cx="560" cy="1250" r="620" fill="url(#rg3)"/>
+
+  <!-- stepped blocks (wrapped vibe) -->
+  <g opacity="0.12">
+    <rect x="60" y="980" width="220" height="70" rx="18" fill="#7C4DFF"/>
+    <rect x="120" y="1060" width="260" height="70" rx="18" fill="#00D2FF"/>
+    <rect x="210" y="1140" width="300" height="70" rx="18" fill="#FF2BD6"/>
+  </g>
+</svg>`;
+
+      const content = document.createElement('div');
+      content.className = 'page-content';
+
+      // move all existing nodes into content wrapper
+      while(section.firstChild){
+        content.appendChild(section.firstChild);
+      }
+
+      section.appendChild(content);
+      section.prepend(bg);
+    }
+
+    function renderSinglePage(p, agg){
+      contentEl.insertAdjacentHTML('beforeend', p.html);
+      const navLabel = `S${p.id.split('-')[1]}`;
+      navEl.insertAdjacentHTML('beforeend', `<a href="#${p.id}">${navLabel}</a>`);
+      const section = document.getElementById(p.id);
+
+      // Inject printable wrapped background per page
+      ensureWrappedBG(section);
+
+      hydrateSection(section, agg);
+    }
+
+    function hydrateSection(section, agg){
+      if(!section) return;
+      const closingInput = section.querySelector('#closingInput');
+      if(closingInput){
+        closingInput.addEventListener('input',(e)=>{
+          STORAGE.setItem('closing_note', e.target.value);
+          const target=document.getElementById('closingPreview');
+          if(target) target.textContent = e.target.value;
+        });
+        const target=document.getElementById('closingPreview');
+        if(target) target.textContent = closingInput.value;
+      }
+      section.querySelectorAll('.sticker-label').forEach(inp=>{
+        const stored = STORAGE.getItem('label_'+inp.dataset.key);
+        if(stored!==null) inp.value = stored; else if(!inp.value && inp.dataset.label) inp.value = inp.dataset.label;
+        inp.addEventListener('change',()=>{ STORAGE.setItem('label_'+inp.dataset.key, inp.value); });
+      });
+
+      hydrateStickerGrid(section);
+      hydrateGsmSection(section);
+
+      section.querySelectorAll('canvas').forEach(cv=>{
+        const type=cv.dataset.type;
+        if(type==='line') drawLineChart(cv, agg.daily);
+        else if(type==='month') drawBarChartMonth(cv, agg.monthly);
+        else if(type==='hours') drawBarChartHours(cv, agg.hourly);
+        else if(type==='week') drawBarChartWeekdays(cv, agg.weekDay);
+        else if(type==='hist') drawHistogram(cv, agg.hist);
+        else if(type==='dateweek') drawMapChart(cv, agg.dateWeek);
+        else if(type==='overlay') drawOverlay(cv, agg.weeklyOverlay);
+        else if(type==='wordcloud') drawWordCloud(cv, agg, 'screen');
+      });
+    }
+
+    
+    function hydrateStickerGrid(section){
+      const grid = section.querySelector('[data-widget="top-stickers"]');
+      if(!grid) return;
+
+      // Render sticker thumbnails like emojis
+      const items = TOP_STICKERS || [];
+      grid.innerHTML = items.map((s, idx)=>`
+        <button class="sticker-emoji" type="button" data-idx="${idx}" aria-label="Sticker ${idx+1}">
+          <img src="${s.src}" alt="" loading="lazy" decoding="async"/>
+          <span class="sticker-badge">×${s.count}</span>
+        </button>
+      `).join('');
+
+      // Simple modal preview
+      const modal = document.getElementById('stickerModal');
+      const modalImg = modal?.querySelector('img');
+      const modalMeta = modal?.querySelector('.sticker-modal-meta');
+      const close = ()=>{ if(modal) modal.classList.remove('open'); };
+      modal?.addEventListener('click', (e)=>{ if(e.target===modal) close(); });
+      document.addEventListener('keydown', (e)=>{ if(e.key==='Escape') close(); });
+
+      grid.querySelectorAll('.sticker-emoji').forEach(btn=>{
+        btn.addEventListener('click', ()=>{
+          const s = items[Number(btn.dataset.idx)];
+          if(!s || !modal || !modalImg) return;
+          modalImg.src = s.src;
+          const kb = s.sizeBytes ? Math.round(s.sizeBytes/1024) : null;
+          if(modalMeta) modalMeta.textContent = `×${s.count}` + (kb?` • ~${kb} KB`:'');
+          modal.classList.add('open');
+        });
+      });
+    }
+
+    function hydrateGsmSection(section){
+      if(section.id !== 'page-21') return;
+
+      // KPI fill
+      const setText = (id, text)=>{ const el=document.getElementById(id); if(el) el.textContent=text; };
+      setText('gsm_totalCalls', GSM_STATS.totalCalls);
+      setText('gsm_totalHours', `${(GSM_STATS.totalHours||0).toString().replace('.',',')} saat`);
+      setText('gsm_avg', `${(GSM_STATS.avgMinutes||0).toString().replace('.',',')} dk`);
+      setText('gsm_max', `${(GSM_STATS.maxMinutes||0).toString().replace('.',',')} dk`);
+
+      // Bars helper
+      const renderBars = (mountId, series, labelKey, valueKey, maxItems=12)=>{
+        const mount = document.getElementById(mountId);
+        if(!mount) return;
+        const arr = (series||[]).slice().sort((a,b)=>b[valueKey]-a[valueKey]).slice(0, maxItems);
+        const max = arr[0]?.[valueKey] || 1;
+        mount.innerHTML = arr.map(d=>{
+          const label = d[labelKey];
+          const v = d[valueKey];
+          const w = Math.max(6, Math.round((v/max)*100));
+          return `<div class="barrow">
+            <div class="barlabel">${label}</div>
+            <div class="bartrack"><div class="barfill" style="width:${w}%"></div></div>
+            <div class="barvalue">${String(v).replace('.',',')}</div>
+          </div>`;
+        }).join('');
+      };
+
+      // Month bars (show in chronological order, but scaled by max)
+      const months = (GSM_STATS.monthSeries||[]);
+      const monthMax = months.reduce((m,d)=>Math.max(m,d.minutes||0), 1);
+      const monthMount = document.getElementById('gsm_monthBars');
+      if(monthMount){
+        monthMount.innerHTML = months.map(d=>{
+          const label = d.month.replace('2025-','');
+          const v = d.minutes||0;
+          const w = Math.max(4, Math.round((v/monthMax)*100));
+          return `<div class="barrow">
+            <div class="barlabel">${label}</div>
+            <div class="bartrack"><div class="barfill" style="width:${w}%"></div></div>
+            <div class="barvalue">${String(v).replace('.',',')}</div>
+          </div>`;
+        }).join('');
+      }
+
+      // Hour bars (top 8)
+      renderBars('gsm_hourBars', GSM_STATS.hourSeries, 'hour', 'minutes', 8);
+
+      // Most day
+      const md = GSM_STATS.mostDay;
+      const mdMin = GSM_STATS.mostDayMinutes;
+      const mdEl = document.getElementById('gsm_mostDay');
+      const mdDesc = document.getElementById('gsm_mostDayDesc');
+      if(mdEl) mdEl.textContent = md ? md.split('-').reverse().join('.') : '—';
+      if(mdDesc) mdDesc.textContent = mdMin!=null ? `${String(mdMin).replace('.',',')} dk konuşma` : '—';
+
+      // Top 5 list
+      const ol = document.getElementById('gsm_top5');
+      if(ol){
+        ol.innerHTML = (GSM_STATS.top5||[]).map(x=>`<li><span>${x.datetime}</span><b>${String(x.minutes).replace('.',',')} dk</b></li>`).join('');
+      }
+
+      // Persist insight inputs
+      section.querySelectorAll('.insight-input').forEach(inp=>{
+        const key = inp.dataset.key;
+        const stored = STORAGE.getItem(key);
+        if(stored!==null) inp.value = stored;
+        inp.addEventListener('input', ()=> STORAGE.setItem(key, inp.value));
+      });
+    }
+
+function drawWordCloud(canvas, agg, mode='screen'){
+      const wordsRaw = agg?.wordCloud||[];
+      if(!wordsRaw.length) return;
+      const rect = canvas.getBoundingClientRect();
+      const parentRect = canvas.parentElement?.getBoundingClientRect();
+      const cssWidth = Math.max(rect.width||0, parentRect?.width||0, 640);
+      const cssHeight = Math.max(rect.height||0, parentRect?.height||0, 260);
+      const scale = Math.max(2, window.devicePixelRatio||1);
+      canvas.width = Math.round(cssWidth * scale);
+      canvas.height = Math.round(cssHeight * scale);
+      canvas.style.width = `${cssWidth}px`;
+      canvas.style.height = `${cssHeight}px`;
+      const ctx = canvas.getContext('2d');
+      ctx.setTransform(scale,0,0,scale,0,0);
+      ctx.clearRect(0,0,cssWidth,cssHeight);
+      ctx.fillStyle = '#f8f5fd';
+      ctx.fillRect(0,0,cssWidth,cssHeight);
+
+      const maxWords = mode==='print'? wordCloudConfig.maxWordsPrint : wordCloudConfig.maxWordsScreen;
+      const maxFreq = wordsRaw[0]?.count || 1;
+      const freqThreshold = Math.min(maxFreq, Math.max(wordCloudConfig.minFrequency, Math.floor(maxFreq*0.015)));
+      const words = wordsRaw.filter(w=>w.count>=freqThreshold).slice(0, maxWords);
+      if(!words.length) return;
+      const minFreq = words[words.length-1].count || 1;
+      const seed = deriveWordCloudSeed(agg, words);
+      const rng = mulberry32(seed);
+      const occW = Math.ceil(cssWidth);
+      const occH = Math.ceil(cssHeight);
+      const occupancy = new Uint8Array(occW*occH);
+      const centerX = cssWidth/2; const centerY = cssHeight/2;
+      const placements = [];
+      const angleStep = 0.35;
+      const baseStep = 6;
+
+      for(const w of words){
+        const fontSize = mapFreqToFont(w.count, minFreq, maxFreq);
+        const wordHash = hashString(w.word);
+        const allowRotate = wordCloudConfig.allowRotate;
+        const rotated = allowRotate && (Math.abs(wordHash)%10 < Math.round(wordCloudConfig.rotationRatio*10));
+        const glyph = buildGlyph(w.word, fontSize, rotated);
+        const maxAttempts = 1400;
+        let placed=false;
+        for(let i=0;i<maxAttempts;i++){
+          const theta = i*angleStep + rng()*0.2;
+          const radius = baseStep + (4 + fontSize*0.16) * theta;
+          const x = centerX + Math.cos(theta)*radius;
+          const y = centerY + Math.sin(theta)*radius;
+          if(!fitsGlyph(occupancy, occW, occH, x, y, glyph)) continue;
+          placements.push({text:w.word, fontSize, rotate:rotated, x, y, color: WORD_CLOUD_PALETTE[Math.abs(wordHash)%WORD_CLOUD_PALETTE.length]});
+          stampGlyph(occupancy, occW, occH, x, y, glyph);
+          placed=true; break;
+        }
+        if(!placed) console.debug('Kelime yerleştirilemedi', w.word);
+      }
+
+      ctx.textAlign='center';
+      ctx.textBaseline='middle';
+      ctx.shadowColor='rgba(41,25,65,0.15)';
+      ctx.shadowBlur=2;
+      ctx.shadowOffsetY=1;
+      placements.forEach(p=>{
+        ctx.save();
+        ctx.translate(p.x,p.y);
+        if(p.rotate) ctx.rotate(Math.PI/2);
+        ctx.fillStyle=p.color;
+        ctx.font = `${p.fontSize}px ${getWordCloudFont()}`;
+        ctx.lineWidth = 1;
+        ctx.strokeStyle='rgba(255,255,255,0.35)';
+        ctx.strokeText(p.text,0,0);
+        ctx.fillText(p.text,0,0);
+        ctx.restore();
+      });
+    }
+
+    function mapFreqToFont(freq, minFreq, maxFreq){
+      const logMin = Math.log(Math.max(minFreq,1));
+      const logMax = Math.log(Math.max(maxFreq,1));
+      const norm = (Math.log(Math.max(freq,1)) - logMin) / Math.max(logMax - logMin, 0.0001);
+      const eased = Math.pow(Math.min(Math.max(norm,0),1), 0.65);
+      return Math.max(wordCloudConfig.minFont, Math.min(wordCloudConfig.maxFont, wordCloudConfig.minFont + eased*(wordCloudConfig.maxFont - wordCloudConfig.minFont)));
+    }
+
+    function buildGlyph(text, fontSize, rotate){
+      const pad = Math.ceil(fontSize*0.3);
+      const tmp = document.createElement('canvas');
+      const ctx = tmp.getContext('2d');
+      ctx.font = `${fontSize}px ${getWordCloudFont()}`;
+      const metrics = ctx.measureText(text);
+      const textWidth = metrics.width;
+      const textHeight = fontSize;
+      const boxWidth = rotate? textHeight : textWidth;
+      const boxHeight = rotate? textWidth : textHeight;
+      tmp.width = Math.ceil(boxWidth + pad*2);
+      tmp.height = Math.ceil(boxHeight + pad*2);
+      ctx.translate(tmp.width/2, tmp.height/2);
+      if(rotate) ctx.rotate(Math.PI/2);
+      ctx.font = `${fontSize}px ${getWordCloudFont()}`;
+      ctx.textAlign='center'; ctx.textBaseline='middle';
+      ctx.fillStyle='#fff';
+      ctx.fillText(text,0,0);
+      const data = ctx.getImageData(0,0,tmp.width,tmp.height);
+      return {data,width:tmp.width,height:tmp.height};
+    }
+
+    function fitsGlyph(occ, w, h, cx, cy, glyph){
+      const startX = Math.round(cx - glyph.width/2);
+      const startY = Math.round(cy - glyph.height/2);
+      if(startX<0 || startY<0 || startX + glyph.width >= w || startY + glyph.height >= h) return false;
+      const pixels = glyph.data.data;
+      for(let y=0;y<glyph.height;y++){
+        const row = (startY + y)*w + startX;
+        for(let x=0;x<glyph.width;x++){
+          const alpha = pixels[(y*glyph.width + x)*4 + 3];
+          if(alpha>0 && occ[row + x]) return false;
+        }
+      }
+      return true;
+    }
+
+    function stampGlyph(occ, w, h, cx, cy, glyph){
+      const startX = Math.round(cx - glyph.width/2);
+      const startY = Math.round(cy - glyph.height/2);
+      const pixels = glyph.data.data;
+      for(let y=0;y<glyph.height;y++){
+        const row = (startY + y)*w + startX;
+        for(let x=0;x<glyph.width;x++){
+          const alpha = pixels[(y*glyph.width + x)*4 + 3];
+          if(alpha>0) occ[row + x] = 1;
+        }
+      }
+    }
+
+    function deriveWordCloudSeed(agg, words){
+      const topWord = words[0]?.word||'';
+      const rangePart = `${agg.range?.min||''}|${agg.range?.max||''}`;
+      const vocabHash = hashString(words.slice(0,40).map(w=>`${w.word}:${w.count}`).join('|'));
+      return hashString(`${rangePart}|${topWord}|${words.length}|${vocabHash}`);
+    }
+
+    function getWordCloudFont(){
+      return "ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto, Arial";
+    }
+
+    function hashString(str){
+      let h = 1779033703 ^ str.length;
+      for(let i=0;i<str.length;i++){
+        h = Math.imul(h ^ str.charCodeAt(i), 3432918353);
+        h = (h << 13) | (h >>> 19);
+      }
+      return (h ^ (h >>> 16)) >>> 0;
+    }
+
+    function mulberry32(a){
+      return function(){
+        a |= 0; a = a + 0x6D2B79F5 | 0;
+        let t = Math.imul(a ^ a >>> 15, 1 | a);
+        t = t + Math.imul(t ^ t >>> 7, 61 | t) ^ t;
+        return ((t ^ t >>> 14) >>> 0) / 4294967296;
+      };
+    }
+
+    function rerenderWordCloudScreen(){
+      const cv = document.getElementById('wordCloudCanvas');
+      if(cv instanceof HTMLCanvasElement && latestAgg){
+        drawWordCloud(cv, latestAgg, 'screen');
+      }
+    }
+
+    function chartCard(title, data, drawer){
+      const card = html(`<div class="card"><h3>${title}</h3><canvas></canvas></div>`);
+      const cv = card.querySelector('canvas');
+      drawer(cv,data);
+      return card;
+    }
+
+    function getCanvasDims(canvas){
+      const ratio = canvas.__ratio || Math.max(2, window.devicePixelRatio||1);
+      return {
+        w: canvas.__cssWidth || (canvas.width/ratio),
+        h: canvas.__cssHeight || (canvas.height/ratio)
+      };
+    }
+
+    
+    function niceTicks(maxVal, target=5){
+      const rawStep = Math.max(maxVal,1) / target;
+      const pow = Math.pow(10, Math.floor(Math.log10(rawStep)));
+      const multiples = [1,2,5,10];
+      let step = multiples[multiples.length-1]*pow;
+      for(const m of multiples){
+        if(rawStep <= m*pow){ step = m*pow; break; }
+      }
+      const yMaxNice = Math.ceil(Math.max(maxVal,1) / step) * step;
+      const ticks = Math.max(2, Math.round(yMaxNice/step));
+      return {step, yMaxNice, ticks};
+    }
+
+    function drawAxes(ctx, w, h, yMax, yLabel, xLabel, xTickLabels, xTickPositions){
+      const padL=52, padB=36, padT=12, padR=12;
+      const plotW = w - padL - padR;
+      const plotH = h - padT - padB;
+
+      const accent = (getComputedStyle(document.documentElement).getPropertyValue('--accent').trim() || '#6b1e2d');
+
+      // grid + y ticks (nice rounded steps)
+      const {step, yMaxNice, ticks} = niceTicks(yMax, 5);
+      ctx.save();
+      ctx.strokeStyle = '#e9e2ec';
+      ctx.fillStyle = '#2b213f';
+      ctx.font = '12px ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto';
+
+      for(let i=0;i<=ticks;i++){
+        const val = i*step;
+        const y = padT + plotH - (val/yMaxNice)*plotH;
+        // grid
+        ctx.beginPath(); ctx.moveTo(padL, y); ctx.lineTo(padL+plotW, y); ctx.stroke();
+        // labels
+        ctx.textAlign='right'; ctx.textBaseline='middle';
+        ctx.fillText(String(Math.round(val)), padL-8, y);
+      }
+
+      // axes
+      ctx.strokeStyle = '#2b213f';
+      ctx.lineWidth = 1;
+      ctx.beginPath();
+      ctx.moveTo(padL, padT); ctx.lineTo(padL, padT+plotH); ctx.lineTo(padL+plotW, padT+plotH);
+      ctx.stroke();
+
+      // axis labels
+      ctx.fillStyle = accent;
+      ctx.font = '700 12px ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto';
+      ctx.textAlign='left'; ctx.textBaseline='top';
+      ctx.fillText(yLabel, 10, 6);
+      ctx.textAlign='right'; ctx.textBaseline='bottom';
+      ctx.fillText(xLabel, w-10, h-6);
+
+      // x tick labels
+      ctx.fillStyle = '#2b213f';
+      ctx.font = '11px ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto';
+      ctx.textAlign='center'; ctx.textBaseline='top';
+      for(let i=0;i<xTickPositions.length;i++){
+        const x = padL + xTickPositions[i]*plotW;
+        const label = xTickLabels[i]||'';
+        ctx.fillText(label, x, padT+plotH+8);
+      }
+
+      ctx.restore();
+      return {padL,padB,padT,padR,plotW,plotH,yMaxNice};
+    }
+
+
+    function setupCanvas(canvas, desiredH=260){
+      const ratio = window.devicePixelRatio || 2;
+      const w = canvas.clientWidth||canvas.parentElement.clientWidth||600;
+      const h = desiredH;
+      canvas.style.height = desiredH+'px';
+      canvas.width = Math.round(w*ratio);
+      canvas.height = Math.round(h*ratio);
+      const ctx=canvas.getContext('2d');
+      ctx.setTransform(ratio,0,0,ratio,0,0);
+      ctx.clearRect(0,0,w,h);
+      return {ctx,w,h};
+    }
+
+    function drawLineChart(canvas, map){
+      const {ctx,w,h} = setupCanvas(canvas, 260);
+      const entries = Array.from(map.entries()).sort((a,b)=>a[0].localeCompare(b[0]));
+      const vals = entries.map(e=>e[1]); const max=Math.max(...vals,1);
+
+      const accent = (getComputedStyle(document.documentElement).getPropertyValue('--accent').trim() || '#6b1e2d');
+      const gold = (getComputedStyle(document.documentElement).getPropertyValue('--gold').trim() || '#c7b299');
+
+      // x ticks: 6 labels max
+      const tickCount = Math.min(6, entries.length);
+      const xTickLabels=[]; const xTickPos=[];
+      for(let i=0;i<tickCount;i++){
+        const idx = Math.round(i*(entries.length-1)/(tickCount-1||1));
+        xTickLabels.push(formatDateShortTR(new Date(entries[idx][0]+'T00:00:00')));
+        xTickPos.push(idx/(entries.length-1||1));
+      }
+
+      const axes = drawAxes(ctx,w,h,max,'Mesaj','Tarih', xTickLabels, xTickPos);
+      const {padL,padT,plotW,plotH,yMaxNice} = axes;
+
+      // line
+      ctx.save();
+      ctx.strokeStyle=accent;
+      ctx.lineWidth=2.25;
+      ctx.beginPath();
+      entries.forEach((e,i)=>{
+        const x = padL + (i/(entries.length-1||1))*plotW;
+        const y = padT + plotH - (e[1]/yMaxNice)*plotH;
+        if(i===0) ctx.moveTo(x,y); else ctx.lineTo(x,y);
+      });
+      ctx.stroke();
+
+      // points
+      ctx.fillStyle=gold;
+      entries.forEach((e,i)=>{
+        const x = padL + (i/(entries.length-1||1))*plotW;
+        const y = padT + plotH - (e[1]/yMaxNice)*plotH;
+        ctx.beginPath(); ctx.arc(x,y,2.6,0,Math.PI*2); ctx.fill();
+      });
+      ctx.restore();
+    }
+
+
+    function drawBarChartMonth(canvas, map){
+      const {ctx,w,h} = setupCanvas(canvas, 260);
+      const months = Array.from(map.entries()).sort((a,b)=>a[0].localeCompare(b[0]));
+      const max=Math.max(...months.map(m=>m[1]),1);
+      const labels = months.map(m=>m[0].slice(5)); // MM
+      const tickIdx = [0,3,6,9,11].filter(i=>i<labels.length);
+      const xTickLabels = tickIdx.map(i=>labels[i]);
+      const xTickPos = tickIdx.map(i=> i/Math.max(labels.length-1,1));
+      const ax = drawAxes(ctx, w, h, max, 'Mesaj', 'Ay', xTickLabels, xTickPos);
+
+      const barW = ax.plotW/Math.max(months.length,1);
+      months.forEach((m,i)=>{
+        const v=m[1];
+        const bh=(v/max)*ax.plotH;
+        const x=ax.padL + i*barW + 6;
+        const y=ax.padT + ax.plotH - bh;
+        ctx.fillStyle='#5d3fd3';
+        ctx.fillRect(x, y, Math.max(barW-12,2), bh);
+      });
+    }
+
+    function drawBarChartHours(canvas, arr){
+      const {ctx,w,h} = setupCanvas(canvas, 260);
+      const max=Math.max(...arr,1);
+      const tickIdx=[0,6,12,18,23];
+      const xTickLabels=tickIdx.map(i=>String(i));
+      const xTickPos=tickIdx.map(i=>i/23);
+      const ax = drawAxes(ctx, w, h, max, 'Mesaj', 'Saat', xTickLabels, xTickPos);
+
+      const barW = ax.plotW/24;
+      arr.forEach((v,i)=>{
+        const bh=(v/max)*ax.plotH;
+        const x=ax.padL + i*barW + 1;
+        const y=ax.padT + ax.plotH - bh;
+        ctx.fillStyle='#f59e0b';
+        ctx.fillRect(x, y, Math.max(barW-2,1), bh);
+      });
+    }
+
+    function drawBarChartWeekdays(canvas, arr){
+      const {ctx,w,h} = setupCanvas(canvas, 260);
+      const max=Math.max(...arr,1);
+      const labels=['Pzt','Sal','Çar','Per','Cum','Cts','Paz'];
+      const xTickLabels = labels;
+      const xTickPos = labels.map((_,i)=> i/6);
+      const ax = drawAxes(ctx, w, h, max, 'Mesaj', 'Gün', xTickLabels, xTickPos);
+
+      const barW = ax.plotW/7;
+      arr.forEach((v,i)=>{
+        const bh=(v/max)*ax.plotH;
+        const x=ax.padL + i*barW + 8;
+        const y=ax.padT + ax.plotH - bh;
+        ctx.fillStyle='#0ea5e9';
+        ctx.fillRect(x, y, Math.max(barW-16,2), bh);
+      });
+    }
+
+    function drawHistogram(canvas, buckets){
+      const {ctx,w,h} = setupCanvas(canvas, 260);
+      const labels=['0-30sn','30-60sn','1-5dk','5-15dk','15-60dk','1-3s','3-10s','10-12s'];
+      const max=Math.max(...buckets,1);
+      const tickIdx=[0,2,4,6,7];
+      const xTickLabels=tickIdx.map(i=>labels[i]);
+      const xTickPos=tickIdx.map(i=> i/Math.max(labels.length-1,1));
+      const ax = drawAxes(ctx, w, h, max, 'Adet', 'Süre aralığı', xTickLabels, xTickPos);
+
+      const barW = ax.plotW/buckets.length;
+      buckets.forEach((v,i)=>{
+        const bh=(v/max)*ax.plotH;
+        const x=ax.padL + i*barW + 6;
+        const y=ax.padT + ax.plotH - bh;
+        ctx.fillStyle='#22c55e';
+        ctx.fillRect(x, y, Math.max(barW-12,2), bh);
+      });
+    }
+
+    function drawMapChart(canvas, map){
+      const {ctx,w,h} = setupCanvas(canvas, 260);
+      const entries = Array.from(map.entries()).sort((a,b)=>a[0].localeCompare(b[0]));
+      const max=Math.max(...entries.map(e=>e[1]),1);
+
+      const tickCount=Math.min(6, entries.length);
+      const xTickLabels=[]; const xTickPos=[];
+      for(let i=0;i<tickCount;i++){
+        const idx = Math.floor(i*(entries.length-1)/Math.max(tickCount-1,1));
+        xTickLabels.push(entries[idx][0].slice(-2)); // week number
+        xTickPos.push(idx/Math.max(entries.length-1,1));
+      }
+      const ax = drawAxes(ctx, w, h, max, 'Adet', 'Hafta', xTickLabels, xTickPos);
+
+      const barW = ax.plotW/Math.max(entries.length,1);
+      entries.forEach((e,i)=>{
+        const bh=(e[1]/max)*ax.plotH;
+        const x=ax.padL + i*barW + 4;
+        const y=ax.padT + ax.plotH - bh;
+        ctx.fillStyle='#a855f7';
+        ctx.fillRect(x, y, Math.max(barW-8,1), bh);
+      });
+    }
+
+    function drawOverlay(canvas, data){
+      const {ctx,w,h} = setupCanvas(canvas, 260);
+      const maxHeight=h;
+      const keys=data.map(d=>d.key);
+      const plotMax=100;
+      const tickCount=Math.min(6, data.length);
+      const xTickLabels=[]; const xTickPos=[];
+      for(let i=0;i<tickCount;i++){
+        const idx = Math.floor(i*(data.length-1)/Math.max(tickCount-1,1));
+        xTickLabels.push(keys[idx].slice(-2));
+        xTickPos.push(idx/Math.max(data.length-1,1));
+      }
+      const ax = drawAxes(ctx, w, h, plotMax, 'Yoğunluk (0-100)', 'Hafta', xTickLabels, xTickPos);
+
+      const colors={msgNorm:'#6366f1',laughNorm:'#f97316',romNorm:'#ec4899',dateiNorm:'#22c55e'};
+      Object.entries(colors).forEach(([field,color])=>{
+        ctx.beginPath();
+        ctx.strokeStyle=color;
+        ctx.lineWidth=2;
+        data.forEach((d,i)=>{
+          const x=ax.padL + (i/Math.max(data.length-1,1))*ax.plotW;
+          const y=ax.padT + ax.plotH - (d[field]/100)*ax.plotH;
+          if(i===0) ctx.moveTo(x,y); else ctx.lineTo(x,y);
+        });
+        ctx.stroke();
+      });
+
+      // legend
+      ctx.fillStyle='#2d1b46';
+      ctx.font='12px sans-serif';
+      const items=[['Mesaj',colors.msgNorm],['Kahkaha',colors.laughNorm],['Romantizm',colors.romNorm],['Date’i',colors.dateiNorm]];
+      items.forEach((it,i)=>{
+        ctx.fillStyle=it[1];
+        ctx.fillRect(ax.padL + i*90, 14, 12, 12);
+        ctx.fillStyle='#2d1b46';
+        ctx.fillText(it[0], ax.padL + i*90 + 16, 24);
+      });
+    }
+
+    function html(str){
+      const t=document.createElement('template'); t.innerHTML=str.trim(); return t.content.firstElementChild;
+    }
+
+    function escapeHtml(str){
+      const map = {"&":"&amp;","<":"&lt;",">":"&gt;","\"":"&quot;","'":"&#39;"};
+      return (str||'').replace(/[&<>"']/g,c=>map[c]||c);
+    }
+
+    function renderDebug(parsed, agg){
+      debugEl.classList.remove('hidden');
+      const msgCount = parsed.messages?.length ?? parsed.messagesCount ?? 0;
+      const lines=[`Toplam satır: ${parsed.lines}`,`Toplam mesaj: ${msgCount}`,`Hata: ${parsed.parseErrors}`,`Aralık: ${parsed.range.min?dayKey(parsed.range.min):'-'} → ${parsed.range.max?dayKey(parsed.range.max):'-'}`];
+      lines.push('Tür sayıları: '+JSON.stringify(agg.kindsCount));
+      if(agg.emojiDebug?.length) lines.push('Emoji örnekleri: '+agg.emojiDebug.slice(0,20).join(' '));
+      debugEl.innerHTML = '<strong>Debug</strong><br>'+lines.join('<br>');
+      debugEl.appendChild(buildWordCloudControls());
+    }
+
+    function buildWordCloudControls(){
+      const wrap = document.createElement('div');
+      wrap.className = 'word-cloud-settings';
+      wrap.innerHTML = `
+        <div style="font-weight:800;margin-bottom:6px;">Word Cloud Settings</div>
+        <label>Max kelime (ekran)</label>
+        <select id="wcMaxWords">
+          <option value="80">80</option>
+          <option value="120">120</option>
+          <option value="140">140</option>
+          <option value="160">160</option>
+        </select>
+        <label>Min font (px) <span id="wcMinFontVal">${wordCloudConfig.minFont}</span></label>
+        <input type="range" id="wcMinFont" min="12" max="26" value="${wordCloudConfig.minFont}">
+        <label style="display:flex;align-items:center;gap:6px;"><input type="checkbox" id="wcRotate" ${wordCloudConfig.allowRotate?'checked':''}> Dikey kelimeler</label>
+      `;
+      const maxSel = wrap.querySelector('#wcMaxWords');
+      if(maxSel) maxSel.value = String(wordCloudConfig.maxWordsScreen);
+      maxSel?.addEventListener('change', ()=>{ wordCloudConfig.maxWordsScreen = Number(maxSel.value); rerenderWordCloudScreen(); });
+      const minFont = wrap.querySelector('#wcMinFont');
+      const minFontVal = wrap.querySelector('#wcMinFontVal');
+      minFont?.addEventListener('input', ()=>{ wordCloudConfig.minFont = Number(minFont.value); if(minFontVal) minFontVal.textContent = wordCloudConfig.minFont; rerenderWordCloudScreen(); });
+      const rotate = wrap.querySelector('#wcRotate');
+      rotate?.addEventListener('change', ()=>{ wordCloudConfig.allowRotate = rotate.checked; rerenderWordCloudScreen(); });
+      return wrap;
+    }
+  </script>
+
+
+<script>
+function formatTimeHHMM(d) {
+  try{
+    if(!d) return "—";
+    const dt = (d instanceof Date) ? d : new Date(d);
+    if (isNaN(dt.getTime())) return "—";
+    const hh = String(dt.getHours()).padStart(2,'0');
+    const mm = String(dt.getMinutes()).padStart(2,'0');
+    return `${hh}:${mm}`;
+  }catch(e){ return "—"; }
+}
+</script>
+
+
+<script>
+/* =========================
+   PNG (300 DPI) Export + ZIP
+   Self-contained (no libs).
+   - Renders each .page to PNG via SVG foreignObject snapshot
+   - Replaces <canvas> with <img> dataURLs in the clone (keeps charts sharp)
+   - Packs PNGs into a ZIP (store method) with CRC32
+   ========================= */
+
+(function(){
+  const btn = document.getElementById('exportPngZipBtn');
+  const statusEl = document.getElementById('exportStatus');
+
+  function setStatus(txt){
+    if(!statusEl) return;
+    statusEl.style.display = txt ? 'inline-flex' : 'none';
+    statusEl.textContent = txt || '';
+  }
+
+  function downloadBlob(blob, filename){
+    const a = document.createElement('a');
+    const url = URL.createObjectURL(blob);
+    a.href = url;
+    a.download = filename;
+    document.body.appendChild(a);
+    a.click();
+    a.remove();
+    setTimeout(()=>URL.revokeObjectURL(url), 1500);
+  }
+
+  // --- CRC32 ---
+  const CRC_TABLE = (function(){
+    const table = new Uint32Array(256);
+    for (let i = 0; i < 256; i++) {
+      let c = i;
+      for (let k = 0; k < 8; k++) c = (c & 1) ? (0xEDB88320 ^ (c >>> 1)) : (c >>> 1);
+      table[i] = c >>> 0;
+    }
+    return table;
+  })();
+
+  function crc32(buf){
+    let c = 0xFFFFFFFF;
+    const u8 = buf instanceof Uint8Array ? buf : new Uint8Array(buf);
+    for (let i = 0; i < u8.length; i++) c = CRC_TABLE[(c ^ u8[i]) & 0xFF] ^ (c >>> 8);
+    return (c ^ 0xFFFFFFFF) >>> 0;
+  }
+
+  // --- ZIP (store / no compression) ---
+  class ZipStoreWriter {
+    constructor(){
+      this.files = [];
+      this.offset = 0;
+      this.chunks = [];
+    }
+    _u16(n){ const b = new Uint8Array(2); b[0]=n&255; b[1]=(n>>>8)&255; return b; }
+    _u32(n){ const b = new Uint8Array(4); b[0]=n&255; b[1]=(n>>>8)&255; b[2]=(n>>>16)&255; b[3]=(n>>>24)&255; return b; }
+    _str(s){ return new TextEncoder().encode(s); }
+
+    addFile(name, dataU8, modDate = new Date()){
+      const nameU8 = this._str(name);
+      const data = dataU8 instanceof Uint8Array ? dataU8 : new Uint8Array(dataU8);
+      const crc = crc32(data);
+      const size = data.length;
+
+      // MS-DOS date/time
+      const dosTime = ((modDate.getHours() & 31) << 11) | ((modDate.getMinutes() & 63) << 5) | ((Math.floor(modDate.getSeconds()/2) & 31));
+      const dosDate = (((modDate.getFullYear()-1980) & 127) << 9) | (((modDate.getMonth()+1) & 15) << 5) | ((modDate.getDate() & 31));
+
+      const localHeader = [
+        this._u32(0x04034b50), // local file header signature
+        this._u16(20),         // version needed
+        this._u16(0),          // flags
+        this._u16(0),          // compression 0=store
+        this._u16(dosTime),
+        this._u16(dosDate),
+        this._u32(crc),
+        this._u32(size),
+        this._u32(size),
+        this._u16(nameU8.length),
+        this._u16(0),          // extra len
+        nameU8,
+        data
+      ];
+
+      const localSize = localHeader.reduce((s, x)=>s + x.length, 0);
+      this.chunks.push(...localHeader);
+
+      this.files.push({
+        nameU8, crc, size,
+        dosTime, dosDate,
+        offset: this.offset
+      });
+      this.offset += localSize;
+    }
+
+    finalize(){
+      const centralStart = this.offset;
+      const centralChunks = [];
+      for(const f of this.files){
+        centralChunks.push(
+          this._u32(0x02014b50), // central dir signature
+          this._u16(20),         // version made by
+          this._u16(20),         // version needed
+          this._u16(0),          // flags
+          this._u16(0),          // compression
+          this._u16(f.dosTime),
+          this._u16(f.dosDate),
+          this._u32(f.crc),
+          this._u32(f.size),
+          this._u32(f.size),
+          this._u16(f.nameU8.length),
+          this._u16(0),          // extra
+          this._u16(0),          // comment
+          this._u16(0),          // disk start
+          this._u16(0),          // int attrs
+          this._u32(0),          // ext attrs
+          this._u32(f.offset),
+          f.nameU8
+        );
+      }
+      const centralSize = centralChunks.reduce((s,x)=>s+x.length,0);
+
+      const end = [
+        this._u32(0x06054b50),   // end of central dir signature
+        this._u16(0),            // disk
+        this._u16(0),            // central dir disk
+        this._u16(this.files.length),
+        this._u16(this.files.length),
+        this._u32(centralSize),
+        this._u32(centralStart),
+        this._u16(0)             // comment length
+      ];
+
+      const all = [...this.chunks, ...centralChunks, ...end];
+      return new Blob(all, {type: 'application/zip'});
+    }
+  }
+
+  // --- DOM snapshot via SVG foreignObject ---
+  function copyComputedStyles(srcEl, dstEl){
+    const cs = getComputedStyle(srcEl);
+    // Copy every computed property (slow but reliable for print/export)
+    for (let i = 0; i < cs.length; i++){
+      const prop = cs[i];
+      dstEl.style.setProperty(prop, cs.getPropertyValue(prop), cs.getPropertyPriority(prop));
+    }
+  }
+
+  function inlineStylesDeep(srcRoot, dstRoot){
+    const srcAll = srcRoot.querySelectorAll('*');
+    const dstAll = dstRoot.querySelectorAll('*');
+    copyComputedStyles(srcRoot, dstRoot);
+    for (let i=0; i<srcAll.length; i++){
+      copyComputedStyles(srcAll[i], dstAll[i]);
+    }
+  }
+
+  function replaceCanvasesWithImages(srcRoot, dstRoot) {
+  try {
+    const srcCanvases = srcRoot.querySelectorAll('canvas');
+    const dstCanvases = dstRoot.querySelectorAll('canvas');
+    const n = Math.min(srcCanvases.length, dstCanvases.length);
+    for (let i = 0; i < n; i++) {
+      const src = srcCanvases[i];
+      const dst = dstCanvases[i];
+      try {
+        // Copy bitmap into cloned canvas
+        dst.width = src.width;
+        dst.height = src.height;
+        const ctx = dst.getContext('2d');
+        if (ctx) ctx.drawImage(src, 0, 0);
+      } catch (e) {
+        // ignore
+      }
+      try {
+        // Additionally replace canvas with img to avoid foreignObject issues
+        const dataUrl = src.toDataURL('image/png');
+        const img = document.createElement('img');
+        img.src = dataUrl;
+        img.alt = '';
+        img.style.width = getComputedStyle(dst).width;
+        img.style.height = getComputedStyle(dst).height;
+        img.style.display = 'block';
+        img.style.objectFit = 'contain';
+        dst.replaceWith(img);
+      } catch (e) {
+        // ignore if tainted
+      }
+    }
+  } catch (e) {
+    // ignore
+  }
+}
+
+async function nodeToPngBlob(node, targetWidth, targetHeight){
+    // Firefox-safe renderer:
+    // Prefer html2canvas (captures <canvas> charts correctly and avoids SVG foreignObject blank exports).
+    if (window.html2canvas) {
+      // Ensure the node is visible during render
+      const prevVis = node.style.visibility;
+      node.style.visibility = 'visible';
+
+      const rect = node.getBoundingClientRect();
+
+      // IMPORTANT: don't rely on rect.left/top (stage may be offscreen).
+      // Capture the full node at 1:1 and then scale to target size.
+      const w = Math.round(node.scrollWidth || rect.width);
+      const h = Math.round(node.scrollHeight || rect.height);
+
+      const canvas = await window.html2canvas(node, {
+        backgroundColor: null,
+        scale: 1,
+        useCORS: true,
+        allowTaint: true,
+        logging: false,
+        removeContainer: true,
+        width: w,
+        height: h,
+        windowWidth: w,
+        windowHeight: h,
+        x: 0,
+        y: 0,
+        scrollX: 0,
+        scrollY: 0
+      });
+
+      node.style.visibility = prevVis;
+
+      // Normalize to exact target dimensions (guarantee 4960x7016)
+      let outCanvas = canvas;
+      if (canvas.width !== targetWidth || canvas.height !== targetHeight) {
+        outCanvas = document.createElement('canvas');
+        outCanvas.width = targetWidth;
+        outCanvas.height = targetHeight;
+        const octx = outCanvas.getContext('2d');
+        octx.clearRect(0, 0, targetWidth, targetHeight);
+        octx.drawImage(canvas, 0, 0, targetWidth, targetHeight);
+      }
+
+      const pngBlob = await new Promise(res => outCanvas.toBlob(res, 'image/png'));
+      return pngBlob;
+    }
+
+    // Fallback (Chromium works; Firefox may output blank)
+    const prevVis = node.style.visibility;
+    node.style.visibility = 'visible';
+
+    const rect = node.getBoundingClientRect();
+    const w = Math.round(rect.width);
+    const h = Math.round(rect.height);
+    const svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+    svg.setAttribute('xmlns', 'http://www.w3.org/2000/svg');
+    svg.setAttribute('width', String(w));
+    svg.setAttribute('height', String(h));
+    svg.setAttribute('viewBox', `0 0 ${w} ${h}`);
+
+    const fo = document.createElementNS('http://www.w3.org/2000/svg', 'foreignObject');
+    fo.setAttribute('x', '0');
+    fo.setAttribute('y', '0');
+    fo.setAttribute('width', '100%');
+    fo.setAttribute('height', '100%');
+
+    const clone = node.cloneNode(true);
+    clone.style.margin = '0';
+    clone.style.transform = 'none';
+    clone.style.width = w + 'px';
+    clone.style.height = h + 'px';
+    clone.style.overflow = 'hidden';
+    fo.appendChild(clone);
+    svg.appendChild(fo);
+
+    const svgStr = new XMLSerializer().serializeToString(svg);
+    const svgBlob = new Blob([svgStr], { type: 'image/svg+xml;charset=utf-8' });
+    const url = URL.createObjectURL(svgBlob);
+
+    const img = new Image();
+    img.decoding = 'async';
+    img.loading = 'eager';
+    img.src = url;
+    await img.decode().catch(()=>{});
+
+    const canvas = document.createElement('canvas');
+    canvas.width = targetWidth;
+    canvas.height = targetHeight;
+    const ctx = canvas.getContext('2d');
+
+    const sca = targetWidth / w;
+    ctx.setTransform(sca, 0, 0, sca, 0, 0);
+    ctx.drawImage(img, 0, 0);
+
+    URL.revokeObjectURL(url);
+    node.style.visibility = prevVis;
+
+    const pngBlob = await new Promise(res=>canvas.toBlob(res, 'image/png'));
+    return pngBlob;
+  }
+
+  function pad2(n){ return String(n).padStart(2,'0'); }
+
+  
+/* =========================
+   EXPORT: PAGINATION + FULL-CANVAS CAPTURE (v28)
+   ========================= */
+
+/**
+ * Split any section that grows beyond one A4 into multiple "continuation" pages.
+ * Works best for long lists (wait blocks, <ul class="list">, etc.).
+ *
+ * Strategy:
+ * - Clone the original section
+ * - Temporarily allow it to grow (height:auto; overflow:visible) to measure overflow
+ * - If it exceeds the base A4 height, move "breakable items" from the bottom into continuation pages
+ */
+function buildPaginatedExportSections(originalSection) {
+  const baseTitle =
+    (originalSection.querySelector("h1,h2,h3")?.textContent || "Devam")
+      .replace(/\s+/g, " ")
+      .trim();
+
+  // 1) First clone: we'll try to make it fit by moving items out
+  const first = originalSection.cloneNode(true);
+
+  // For measurement we need it in DOM; we'll mount it into exportStage later.
+  // We'll return a "builder" function that paginates once mounted.
+  first.__paginationMeta = { baseTitle };
+  return [first];
+}
+
+/**
+ * Find breakable items inside a page clone (things we can move to the next page).
+ * Priority: explicit data-break-item, then common list items.
+ */
+function getBreakableItems(pageRoot) {
+  const explicit = Array.from(pageRoot.querySelectorAll("[data-break-item]"));
+  if (explicit.length) return explicit;
+
+  // Heuristics: wait blocks + list items (ordered by DOM)
+  return Array.from(
+    pageRoot.querySelectorAll(".wait-block, ul.list > li, .list > li")
+  );
+}
+
+/**
+ * Creates a continuation page that keeps the same background style,
+ * but shows only a title and a flowing stack of moved items.
+ */
+function makeContinuationPage(fromPage, titleText) {
+  const cont = fromPage.cloneNode(true);
+
+  // Remove everything inside the page and rebuild a minimal layout
+  cont.querySelectorAll("script").forEach((s) => s.remove());
+
+  // Keep background layers (they're on the root via pseudo/CSS). We'll just wipe children.
+  while (cont.firstChild) cont.removeChild(cont.firstChild);
+
+  const header = document.createElement("div");
+  header.style.padding = "18mm 18mm 8mm 18mm";
+  header.innerHTML = `
+    <div style="display:flex; align-items:flex-end; gap:10px;">
+      <div style="font-family: inherit; font-weight:800; font-size: 22pt; letter-spacing: -0.02em; color:#fff;">
+        ${escapeHtml(titleText)}
+      </div>
+      <div style="opacity:.7; color:#fff; font-size:11pt; margin-bottom:3px;">(devam)</div>
+    </div>
+    <div style="height:3px; width:80mm; margin-top:6mm; background: linear-gradient(90deg,#7c3aed,#ec4899); border-radius:99px; opacity:.9;"></div>
+  `;
+
+  const body = document.createElement("div");
+  body.style.padding = "0 18mm 18mm 18mm";
+
+  const card = document.createElement("div");
+  card.className = "card";
+  card.style.padding = "10mm";
+  card.style.minHeight = "0";
+
+  const flow = document.createElement("div");
+  flow.className = "continuation-flow";
+  flow.style.display = "flex";
+  flow.style.flexDirection = "column";
+  flow.style.gap = "6mm";
+
+  card.appendChild(flow);
+  body.appendChild(card);
+
+  cont.appendChild(header);
+  cont.appendChild(body);
+
+  return { cont, flow };
+}
+
+function escapeHtml(str) {
+  return String(str)
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;")
+    .replace(/'/g, "&#39;");
+}
+
+/**
+ * Given a mounted page clone, paginate it into multiple mounted clones (first + continuations).
+ * Returns an array of DOM nodes (already mounted under exportStage).
+ */
+function paginateMountedPageClone(mountedPage, baseTitle) {
+  // Record the "one page" height while it's still fixed-size A4
+  mountedPage.style.overflow = "hidden";
+  mountedPage.style.height = ""; // keep CSS-defined A4 height
+  const baseH = mountedPage.getBoundingClientRect().height;
+
+  // Let it expand so we can detect overflow content height
+  mountedPage.style.overflow = "visible";
+  mountedPage.style.height = "auto";
+
+  // If it doesn't overflow, restore and return
+  if (mountedPage.scrollHeight <= baseH + 1) {
+    mountedPage.style.overflow = "hidden";
+    mountedPage.style.height = "";
+    return [mountedPage];
+  }
+
+  const breakables = getBreakableItems(mountedPage);
+  if (!breakables.length) {
+    // Can't split safely; restore and return single (will clip like before)
+    mountedPage.style.overflow = "hidden";
+    mountedPage.style.height = "";
+    return [mountedPage];
+  }
+
+  // Move items from bottom into a buffer until the first page fits
+  const moved = [];
+  // We'll always pick the last breakable that still exists in DOM
+  while (mountedPage.scrollHeight > baseH + 1) {
+    const itemsNow = getBreakableItems(mountedPage);
+    const last = itemsNow[itemsNow.length - 1];
+    if (!last) break;
+    moved.unshift(last); // preserve order
+    last.remove();
+  }
+
+  // Restore first page to fixed A4
+  mountedPage.style.overflow = "hidden";
+  mountedPage.style.height = "";
+
+  if (!moved.length) return [mountedPage];
+
+  // Build continuation pages by filling until each page reaches baseH
+  const pages = [mountedPage];
+
+  let remaining = moved.slice();
+  while (remaining.length) {
+    const { cont, flow } = makeContinuationPage(mountedPage, baseTitle);
+
+    // Mount cont temporarily to measure heights while filling
+    mountedPage.parentElement.appendChild(cont);
+
+    cont.style.overflow = "visible";
+    cont.style.height = "auto";
+
+    // Fill items until we overflow, then back off last and continue next page
+    while (remaining.length) {
+      const item = remaining[0];
+      flow.appendChild(item);
+      remaining.shift();
+
+      if (cont.scrollHeight > baseH + 1) {
+        // remove last added and keep it for next page
+        flow.removeChild(item);
+        remaining.unshift(item);
+        break;
+      }
+    }
+
+    // Fix cont to A4
+    cont.style.overflow = "hidden";
+    cont.style.height = "";
+
+    pages.push(cont);
+  }
+
+  return pages;
+}
+
+/**
+ * Capture a mounted node to a PNG blob, fitting to A4 pixel size.
+ * (Uses existing nodeToPngBlob that preserves the full node, then scales to target.)
+ */
+async function captureMountedPageToPngBlob(node, targetW, targetH) {
+  // Remove any transforms (can cause "only top-left" captures on some browsers)
+  const prevTransform = node.style.transform;
+  node.style.transform = "none";
+  try {
+    const blob = await nodeToPngBlob(node, targetW, targetH);
+    return blob;
+  } finally {
+    node.style.transform = prevTransform;
+  }
+}
+
+async function exportAll(opts = {}) {
+  const {
+    downloadPrefix = "wrapped_2025",
+    exportMode = "png", // "png" or "pdf"
+    dpi = 300,
+  } = opts;
+
+  // A4 @ 300dpi
+  const TARGET_W = Math.round((210 / 25.4) * dpi); // 2480
+  const TARGET_H = Math.round((297 / 25.4) * dpi); // 3508
+
+  const pages = Array.from(document.querySelectorAll("section.page"));
+
+  // Build initial clones array (one per section). Pagination happens after mounting.
+  const clones = pages.flatMap((p) => buildPaginatedExportSections(p));
+
+  // Stage for offscreen rendering
+  const exportStage = document.getElementById("exportStage");
+  exportStage.innerHTML = "";
+  exportStage.style.position = "fixed";
+  exportStage.style.left = "-200vw";
+  exportStage.style.top = "0";
+  exportStage.style.width = "1px";
+  exportStage.style.height = "1px";
+  exportStage.style.overflow = "visible";
+  exportStage.style.zIndex = "-1";
+
+  const renderedBlobs = [];
+
+  // Mount, paginate, capture
+  for (let i = 0; i < clones.length; i++) {
+    const clone = clones[i];
+    exportStage.appendChild(clone);
+
+    // Wait a frame for layout (fonts/charts)
+    await new Promise((r) => requestAnimationFrame(() => r()));
+    await new Promise((r) => setTimeout(r, 25));
+
+    const meta = clone.__paginationMeta || { baseTitle: "Devam" };
+
+    // Paginate this mounted clone into potentially multiple mounted pages
+    const paginated = paginateMountedPageClone(clone, meta.baseTitle);
+
+    // If paginate created extra pages, it already mounted them after clone.
+    // We should capture each in order.
+    for (let j = 0; j < paginated.length; j++) {
+      const pageNode = paginated[j];
+
+      // Ensure it is at top-left of stage (no scroll offsets)
+      pageNode.scrollTop = 0;
+      pageNode.scrollLeft = 0;
+
+      const blob = await captureMountedPageToPngBlob(
+        pageNode,
+        TARGET_W,
+        TARGET_H
+      );
+      renderedBlobs.push(blob);
+    }
+
+    // Important: if paginate created extra nodes, keep them; they will be cleared at end anyway.
+  }
+
+  // Download
+  if (exportMode === "png") {
+    for (let i = 0; i < renderedBlobs.length; i++) {
+      const blob = renderedBlobs[i];
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement("a");
+      a.href = url;
+      a.download = `${downloadPrefix}_${String(i + 1).padStart(2, "0")}.png`;
+      document.body.appendChild(a);
+      a.click();
+      a.remove();
+      URL.revokeObjectURL(url);
+      await new Promise((r) => setTimeout(r, 150));
+    }
+    toast(`PNG export tamamlandı: ${renderedBlobs.length} sayfa`);
+    return;
+  }
+
+  if (exportMode === "pdf") {
+    // If jsPDF exists in the file already, use it; otherwise fall back to browser print
+    if (typeof window.jspdf?.jsPDF !== "function") {
+      toast("jsPDF bulunamadı. Tarayıcı yazdırma penceresi açılıyor…");
+      window.print();
+      return;
+    }
+
+    const { jsPDF } = window.jspdf;
+    const pdf = new jsPDF({
+      orientation: "portrait",
+      unit: "pt",
+      format: "a4",
+      compress: true,
+    });
+
+    const pageW = pdf.internal.pageSize.getWidth();
+    const pageH = pdf.internal.pageSize.getHeight();
+
+    for (let i = 0; i < renderedBlobs.length; i++) {
+      const blob = renderedBlobs[i];
+      const dataUrl = await blobToDataURL(blob);
+      if (i > 0) pdf.addPage();
+      pdf.addImage(dataUrl, "PNG", 0, 0, pageW, pageH, undefined, "FAST");
+    }
+
+    pdf.save(`${downloadPrefix}.pdf`);
+    toast(`PDF export tamamlandı: ${renderedBlobs.length} sayfa`);
+  }
+}
+
+async function blobToDataURL(blob) {
+  return await new Promise((resolve) => {
+    const r = new FileReader();
+    r.onload = () => resolve(r.result);
+    r.readAsDataURL(blob);
+  });
+}
+
+
+// Wire button
+(function () {
+  const btn = document.getElementById("exportPngZipBtn");
+  if (!btn) return;
+  btn.addEventListener("click", () => exportAll({ mode: "pngzip300", scale: 2 }));
+})();
+
+  
+;
+
+
+})();
+</script>
+
+
+  <!-- html2canvas for Firefox-safe PNG export -->
+  <script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
+
+
+  <div id="exportStage" class="export-stage" aria-hidden="true"></div>
+
+  <div id="stickerModal" class="sticker-modal" role="dialog" aria-modal="true" aria-label="Sticker">
+    <div class="sticker-modal-card">
+      <img src="" alt="Sticker önizleme"/>
+      <div class="sticker-modal-meta"></div>
+      <div class="muted" style="margin-top:10px;">Kapatmak için boş alana dokun veya ESC.</div>
+    </div>
+  </div>
+
+</body>
+</html>
